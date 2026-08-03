@@ -19,8 +19,8 @@ even if the doing is later scheduling — do not turn it into an event to be hel
 
 | | |
 | --- | --- |
-| Tasks limits | `_shared/workspace-tags.md` |
-| API | `_shared/google-workspace-mechanics.md` |
+| Tasks limits | `~/.claude/skills/_shared/workspace-tags.md` |
+| API | `~/.claude/skills/_shared/google-workspace-mechanics.md` |
 | Feedback Open | `FEEDBACK.md` (skim on invoke) |
 | Hub OAuth | `levihirsch0@gmail.com` · `~/.config/collevity/gcal/` |
 
@@ -58,7 +58,8 @@ No tags, no color. Unknown fields **silently drop**. Domain (if any) → a line 
 When **he** gives a time or says schedule it now:
 
 1. `/schedule` (title, notes, time)  
-2. Event `cv_source=task` + normal tags  
+2. Event gets `cv_source=schedule` + `cv_origin=task` — source = who wrote it, origin = where
+   it came from  
 3. **Close the task** — no open shadow  
 4. Notes → event description  
 

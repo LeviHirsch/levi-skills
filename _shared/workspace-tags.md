@@ -12,14 +12,19 @@ structured, queryable, and on the phone. Tags make events queryable, not just vi
 | `cv_schema` | yes | `v1` |
 | `cv_domain` | yes | free text — **not a closed enum** |
 | `cv_sub` | no | free text |
-| `cv_source` | yes | `schedule` · `task` · `log-transcription` · `manual` |
+| `cv_source` | yes | `schedule` · `log-transcription` · `manual` |
+| `cv_origin` | no | `task` — where it came from, when not typed directly |
 | `cv_confidence` | `/log` only | `logged` · `inferred` |
 | `cv_parent` | no | container event id |
+
+**`cv_source` always means "which skill wrote this event"** — never where the idea came from.
+That is `cv_origin`. A task promoted to an event is `cv_source=schedule` + `cv_origin=task`,
+because `/schedule` is what wrote it. Keeping these separate is what makes "everything `/log`
+produced" and "everything that started life as a task" two different, answerable questions.
 
 | `cv_source` | means |
 | --- | --- |
 | `schedule` | `/schedule` created it |
-| `task` | promoted from a Google Task (tasks themselves cannot hold tags) |
 | `log-transcription` | `/log` on ACTUAL |
 | `manual` | hand / ad-hoc, not one of the three skills |
 
@@ -69,3 +74,15 @@ container iff something names it as parent.
 
 If he must correct it by eye, put it in title / color / calendar or say it in the report —
 not only in a private tag.
+
+### Free/busy — one observation, not a rule
+
+On the 2026-08-01 transcription, marking containers and transit `transparent` and discrete
+activity `opaque` made the day read as "ten things inside seven contexts" rather than a
+seventeen-block wall. Levi: *"it does read better overall."* But he also confirmed the two
+render **indistinguishably** in his UI, and that no load-bearing rule has been found for
+which is which.
+
+So: no skill invents a free/busy policy. If Levi asks for the split, the context/activity
+shape above is the one that has been tried and partly liked. Recorded so it is not
+rediscovered from scratch.

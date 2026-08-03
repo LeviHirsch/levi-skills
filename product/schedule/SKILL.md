@@ -19,9 +19,9 @@ turn it into a task. Only place what he asked for (or already has a real time).
 
 | | |
 | --- | --- |
-| Tags / visibility | `_shared/workspace-tags.md` |
-| Color map (provisional) | `_shared/domains.json` |
-| API, access, calendar pick | `_shared/google-workspace-mechanics.md` |
+| Tags / visibility | `~/.claude/skills/_shared/workspace-tags.md` |
+| Color map (provisional) | `~/.claude/skills/_shared/domains.json` |
+| API, access, calendar pick | `~/.claude/skills/_shared/google-workspace-mechanics.md` |
 | Feedback Open | `FEEDBACK.md` (skim on invoke) |
 | Hub OAuth | `levihirsch0@gmail.com` · `~/.config/collevity/gcal/` |
 
@@ -61,8 +61,12 @@ Never: `ACTUAL…` (`/log` only), `nascen.tech`, or one-calendar-per-domain. Res
 | --- | --- |
 | `cv_schema` / `cv_source` / `cv_domain` | `v1` / `schedule` / free text |
 | `cv_sub` | optional |
+| `cv_origin` | `task` if promoted from `/task`; omit otherwise |
 | `colorId` | map or `_fallback` |
 | `sendUpdates` | `none` unless attendees approved |
+
+`cv_source` is always `schedule` here — it records **who wrote the event**, not where the idea
+came from. Origin goes in `cv_origin`.
 
 `status: tentative` and `transparency: transparent` only when he asked or it clearly fits —
 **not visible** in the UI for events he owns. Do not invent a free/busy policy.

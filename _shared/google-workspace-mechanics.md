@@ -17,9 +17,9 @@ the Google UI to reflect this.
 
 | what | where |
 | --- | --- |
-| Daily logs | `…/03_TACTIC/daily-tracking/<YYYY-MM-DD>.md` |
-| Lake | `…/03_TACTIC/_DATA/collevity_lake.jsonl` |
-| Lake reader | `product/checkin/read_lake_day.py` |
+| Daily logs | `00_COLLEVITY/03_TACTIC/daily-tracking/<YYYY-MM-DD>.md` |
+| Lake | `00_COLLEVITY/03_TACTIC/_DATA/collevity_lake.jsonl` |
+| Lake reader | `~/.claude/skills/checkin/read_lake_day.py` |
 | ACTUAL calendar | `ACTUAL - transcribed from log` |
 | OAuth | `~/.config/collevity/gcal/` |
 

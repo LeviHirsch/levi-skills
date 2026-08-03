@@ -20,13 +20,13 @@ evidence-bound. Own calendar so primary stays clean.
 
 | | |
 | --- | --- |
-| Tags | `_shared/workspace-tags.md` |
-| Color map (provisional) | `_shared/domains.json` |
-| API + lake | `_shared/google-workspace-mechanics.md` |
+| Tags | `~/.claude/skills/_shared/workspace-tags.md` |
+| Color map (provisional) | `~/.claude/skills/_shared/domains.json` |
+| API + lake | `~/.claude/skills/_shared/google-workspace-mechanics.md` |
 | Feedback Open | `FEEDBACK.md` (skim on invoke) |
 | Calendar | `ACTUAL - transcribed from log` **only** |
-| Daily logs | `…/03_TACTIC/daily-tracking/<YYYY-MM-DD>.md` |
-| Lake reader | `product/checkin/read_lake_day.py` |
+| Daily logs | `00_COLLEVITY/03_TACTIC/daily-tracking/<YYYY-MM-DD>.md` |
+| Lake reader | `~/.claude/skills/checkin/read_lake_day.py` |
 | Hub OAuth | `levihirsch0@gmail.com` · `~/.config/collevity/gcal/` |
 
 Tags → raw Calendar API. Scripts live until a shape repeats.

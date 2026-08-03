@@ -4,6 +4,7 @@
   "_updated": "2026-08-03",
   "_fallback": { "colorId": "8", "colorName": "Graphite" },
   "_ceiling": "Only 11 event colors exist. Cap COLORED domains at 11; cv_sub is unlimited. Unmapped cv_domain uses _fallback.",
+  "_fallback_rule": "No mapped domain may reuse the _fallback colorId — otherwise unmapped domains render identically to a real one and the fallback stops being a visible signal.",
   "_posture": "flexible and adjustable — prefer a new string + fallback color over shoehorning into a listed domain",
 
   "domains": {
@@ -13,7 +14,7 @@
     "relationships":{ "colorId": "7",  "colorName": "Peacock",   "note": "friends, discipleship, one-on-ones outside the house" },
     "family":       { "colorId": "6",  "colorName": "Tangerine", "note": "Peter, Sierra, the kids, house, meals, guests" },
     "faith":        { "colorId": "3",  "colorName": "Grape",     "note": "devos, prayer, church, members meeting, missions reading" },
-    "rhythm":       { "colorId": "8",  "colorName": "Graphite",  "note": "sleep, meds, transit, getting ready - the day's scaffolding" }
+    "rhythm":       { "colorId": "1",  "colorName": "Lavender",  "note": "sleep, meds, transit, getting ready - the day's scaffolding" }
   },
 
   "_open": [

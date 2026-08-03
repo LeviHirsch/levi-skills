@@ -1,0 +1,24 @@
+{
+  "_note": "Domain -> color map. Single source of truth for color. Events store cv_domain only; color is a projection applied by a recolor pass. Edit here and re-run the pass to recolor everything. Observed, not ratified - add freely.",
+  "_schema": "v1",
+  "_updated": "2026-08-03",
+  "_fallback": { "colorId": "8", "colorName": "Graphite" },
+  "_ceiling": "Only 11 event colors exist. Cap COLORED domains at 11; cv_sub is unlimited.",
+
+  "domains": {
+    "income":       { "colorId": "5",  "colorName": "Banana",    "note": "job search, Frontlines/Cody, contracts, paycheck path" },
+    "nascentech":   { "colorId": "10", "colorName": "Basil",     "note": "taxes, GTM, brand, capital, fellows, Sabrina" },
+    "collevity":    { "colorId": "9",  "colorName": "Blueberry", "note": "dropper, orchestrate, skills, integrations, servers" },
+    "relationships":{ "colorId": "7",  "colorName": "Peacock",   "note": "friends, discipleship, one-on-ones outside the house" },
+    "family":       { "colorId": "6",  "colorName": "Tangerine", "note": "Peter, Sierra, the kids, house, meals, guests" },
+    "faith":        { "colorId": "3",  "colorName": "Grape",     "note": "devos, prayer, church, members meeting, missions reading" },
+    "rhythm":       { "colorId": "8",  "colorName": "Graphite",  "note": "sleep, meds, transit, getting ready - the day's scaffolding" }
+  },
+
+  "_open": [
+    "family vs relationships may be one domain or two",
+    "discernment (Thailand, missions, what-to-work-on) has no home yet",
+    "rhythm may not be a domain at all - it may be the 'standing pattern' object type",
+    "cv_domain single- or multi-valued: undecided"
+  ]
+}

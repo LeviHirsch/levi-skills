@@ -39,7 +39,7 @@ Promotion is **not** a diary. If you narrate the whole session there, you are wr
 | Registry | `/Users/levi/Library/Mobile Documents/com~apple~CloudDocs/00_COLLEVITY/03_TACTIC/thread-registry.md` |
 | Protocol | `…/01_STRATEGY/protocols/session-save-protocol.md` |
 | Skill dir (load) | `~/.claude/skills/session-save/` (symlink) |
-| Skill dir (source) | `~/dev/levi-skills/product/session-save/` |
+| Skill dir (source) | `00_COLLEVITY/02_CONTENT/levi-skills/product/session-save/` |
 
 Package folder: `YYYY-MM-DD-HHMM_<session-slug>__<cwd-slug>/`
 

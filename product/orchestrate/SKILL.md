@@ -26,7 +26,7 @@ Do **not** do the thread work. Do **not** replace `/session-save`, `/checkin`, o
 | Registry | `/Users/levi/Library/Mobile Documents/com~apple~CloudDocs/00_COLLEVITY/03_TACTIC/thread-registry.md` |
 | SPP lake | `/Users/levi/Library/Mobile Documents/com~apple~CloudDocs/00_COLLEVITY/03_TACTIC/claude_session-persistent-packages/` |
 | This skill (load) | `~/.claude/skills/orchestrate/` (symlink) |
-| This skill (source) | `~/dev/levi-skills/product/orchestrate/` |
+| This skill (source) | `00_COLLEVITY/02_CONTENT/levi-skills/product/orchestrate/` |
 | Protocol | `…/00_COLLEVITY/01_STRATEGY/protocols/orchestrator-session.md` |
 
 **Ids:** one registry row = one durable **thread** (kebab slug). The SPP folder name is a *session* label — not the thread id. `latest-spp` is only that folder’s name under the lake.

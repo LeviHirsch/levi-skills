@@ -10,6 +10,10 @@ Defect fixes + the checkin dependency made explicit.
   day, which is the failure this skill exists to avoid
 - `/checkin` now offers `/log` at close, once the day is `core-complete`
 
+## v0.6.1 — 2026-08-03
+
+Version align; description distinguishes ACTUAL vs plan calendar vs checkin.
+
 ## v0.6 — 2026-08-03
 
 Suite compatibility: surfaces map; absolute daily-log path; gather0 is offer-/checkin not

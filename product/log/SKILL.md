@@ -1,9 +1,9 @@
 ---
 name: log
-description: Reconstruct a past day onto the ACTUAL calendar from the daily-tracking log plus the Collevity lake — timed blocks placed directly, untimed activity bounded from evidence, every block marked logged or inferred. The "actual" half of intent-vs-actual. Use on /log, "transcribe my day", "put yesterday on the calendar", "reconstruct <date>". For future events use /schedule.
+description: Reconstruct a past day onto the ACTUAL calendar from the daily-tracking log plus the Collevity lake — timed blocks placed directly, untimed activity bounded from evidence, every block marked logged or inferred. The "actual" half of intent-vs-actual. Use on /log, "transcribe my day", "reconstruct <date> onto ACTUAL", "put yesterday on the ACTUAL calendar". For future/plan events use /schedule. For daily metrics interview use /checkin.
 ---
 
-# /log (v0.6)
+# /log (v0.6.1)
 
 Past day → blocks on **`ACTUAL - transcribed from log`**. Not `/schedule`: backward, batch,
 evidence-bound. Own calendar so primary stays clean.

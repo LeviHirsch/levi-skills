@@ -6,7 +6,7 @@ Convention: `~/.claude/skills/_shared/skill-feedback-convention.md`.
 
 ## Open
 
-_(none yet — v0.1 has not been used in anger)_
+_(none yet — suite at v0.6.1; not yet used in anger)_
 
 ## Applied / closed
 

@@ -104,8 +104,8 @@ drop. Due → appears on Calendar UI; undated → side panel. List delete wipes 
 
 | list | role |
 | --- | --- |
-| `Scheduling queue` | wants a time |
-| `My Tasks` | loose to-dos |
+| `Scheduling queue` | wants to become an event someday (no slot yet) |
+| `My Tasks` | loose residue |
 
 ## Lake
 

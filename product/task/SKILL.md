@@ -37,8 +37,8 @@ only if he asked for that name.
 
 | list | holds |
 | --- | --- |
-| **Scheduling queue** | wants a time, does not have one (people, "book X") |
-| **My Tasks** | other to-dos (errands, deposit the check) |
+| **Scheduling queue** | wants to become an event someday — no slot claimed yet (people, "book X") |
+| **My Tasks** | other residue (errands, deposit the check) |
 
 Standing arcs → `/orchestrate intake`. This is small residue only.
 

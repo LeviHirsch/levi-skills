@@ -54,9 +54,12 @@ them would solve a problem that does not exist. What they share lives in `_share
 | `workspace-tags.md` | the `cv_*` tag schema; what is visible to Levi and what is not |
 | `domains.json` | domain → color, the single source of truth for color |
 | `google-workspace-mechanics.md` | API behaviour verified live, not read from docs |
+| `skill-feedback-convention.md` | how per-skill `FEEDBACK.md` works |
 
-Chain: `checkin` builds the daily log → `log` transcribes it → eventually compared against
-what `schedule` projected.
+Chain: `checkin` builds the daily log → `log` transcribes it onto `ACTUAL` → that history
+is what planning (`schedule` / `task`) can eventually be measured against.
+
+Each of the three supports `/<skill> feedback …` into its own `FEEDBACK.md`.
 
 ## Everyday
 

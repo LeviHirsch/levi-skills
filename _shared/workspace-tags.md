@@ -10,7 +10,7 @@ phone. These tags are what make it queryable rather than just visible.
 
 ## The keys
 
-Written into `extendedProperties.private` on calendar events.
+Written into `extendedProperties.private` on **calendar events** only.
 
 | key | required | values |
 | --- | --- | --- |
@@ -21,7 +21,17 @@ Written into `extendedProperties.private` on calendar events.
 | `cv_confidence` | `/log` only | `logged` (a time actually recorded) · `inferred` (bounded from other evidence) |
 | `cv_parent` | no | id of a containing block; see hierarchy below |
 
-**Never put tags in titles.** Levi's ruling 2026-08-02. Titles stay human.
+**`cv_source` meanings**
+
+| value | means |
+| --- | --- |
+| `schedule` | created by `/schedule` |
+| `task` | calendar event that was **promoted** from a Google Task (the task itself cannot hold tags) |
+| `log-transcription` | created by `/log` on the ACTUAL calendar |
+| `manual` | written by hand or ad-hoc script, not one of the three skills |
+
+**Never put tags in titles.** Titles stay human. Color + calendar are the human-visible
+handles; tags are for query and later machine use.
 
 ## Querying
 
@@ -33,31 +43,31 @@ Server-side, exact, multi-key AND. This is the whole reason the scheme exists.
 
 ## Color is a projection, never a source of truth
 
-Events store `cv_domain`. Color is applied by a pass reading `domains.json`. Consequences:
+Events store `cv_domain`. Color is applied from `domains.json` at write (or by a recolor pass).
 
-- **Recolor** — edit `domains.json`, re-run. ~13s for a day's events.
+- **Recolor** — edit `domains.json`, re-run. ~13s for a day's events (proven).
 - **Rename a domain** — query the old value, rewrite it. Exact, no text matching.
 - **Merge / split** — same query, different rewrite.
 - **Add** — just use it. Unmapped domains take `_fallback` rather than erroring.
 
 ## Tasks cannot be tagged
 
-Google Tasks has **no** `extendedProperties` and no color. The full resource is
-`title · notes · due · status · parent · position`. Unknown fields are accepted by the API
-and **silently dropped**. If a task must carry domain, it goes in `notes` as a visible line
-or it lives outside Google.
+Google Tasks has **no** `extendedProperties` and no color. Full resource:
+`title · notes · due · status · parent · position · links`. Unknown fields are accepted by
+the API and **silently dropped**. If a task must carry domain, put it in `notes` as a visible
+line, or leave it off.
 
-Tasks does have real `parent` hierarchy — one level, genuine. Calendar does not.
+Tasks does have real `parent` hierarchy — one level, genuine. Calendar does not (use
+`cv_parent` instead).
 
 ## Hierarchy
 
-Google Calendar has no parent/child. `cv_parent` is the workaround: a block names its
-container. A block **is** a container iff something else names it as parent — derived, not
-declared, so no convention is needed.
+Google Calendar has no parent/child. `cv_parent` is the workaround: a child names its
+container event id. A block **is** a container iff something else names it as parent —
+derived, not declared.
 
 **Overlap is never an error.** Nested and concurrent blocks are frequently the accurate
-record ("this happened inside the library block", multitasking). No skill should treat
-overlap as a conflict to resolve or a thing to warn about.
+record. No skill should treat overlap as a conflict to resolve or a thing to warn about.
 
 ## What is visible to Levi
 
@@ -66,9 +76,10 @@ overlap as a conflict to resolve or a thing to warn about.
 | title | yes |
 | color | yes |
 | which calendar | yes |
-| `status` (tentative/confirmed) | **no** — renders identically for events you own |
-| `transparency` (free/busy) | **no** — not distinguishable in practice |
+| `status` (tentative / confirmed) | **no** for events you own without guests |
+| `transparency` (free / busy) | **no** in practice |
 | `extendedProperties` | **no** |
 
-Only title, color, and calendar are human-checkable. Everything else is machine-only, so a
-tag Levi cannot see is a tag Levi cannot correct. Prefer surfacing over silently fixing.
+Only title, color, and calendar are human-checkable. Everything else is machine-only. If
+something needs to be correctable by eye, put it in title, color, or calendar — or say it in
+the skill's report — not only in a private tag.

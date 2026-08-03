@@ -12,24 +12,37 @@ stdio MCP. Creds `~/.config/collevity/gcal/`. Hub account `levihirsch0@gmail.com
 
 **`workspace-mcp` cannot write `extendedProperties`** — `manage_event` has no such field.
 Tag writes require the raw Calendar API with the stored OAuth token. The MCP is fine for
-plain reads and simple event CRUD.
+plain reads and simple event CRUD (and for Tasks, which have no tags).
 
 Raw API pattern: load `~/.config/collevity/gcal/credentials/<email>.json`, try the stored
 `token`, on `401` refresh via `refresh_token` against `token_uri`. Refresh token is durable
 as long as the OAuth consent screen stays "In production" (Testing expires them in 7 days).
 
+## Paths the skills need
+
+| what | where |
+| --- | --- |
+| Daily tracking logs | `…/00_COLLEVITY/03_TACTIC/daily-tracking/<YYYY-MM-DD>.md` |
+| Lake | `…/00_COLLEVITY/03_TACTIC/_DATA/collevity_lake.jsonl` |
+| Lake day reader | `product/checkin/read_lake_day.py` (symlink: `~/.claude/skills/checkin/`) |
+| ACTUAL calendar (name) | `ACTUAL - transcribed from log` |
+| OAuth | `~/.config/collevity/gcal/` |
+
+Resolve calendar and task-list **ids by title** at runtime; do not hardcode ids in skills.
+
 ## Calendar access map
 
 | role | calendar |
 | --- | --- |
-| owner | `levihirsch0` (primary) · `truthtrek` · `leviahirsch1` · `dorkingham` · `levi@nascen.tech`* |
+| owner | `levihirsch0` (primary) · `truthtrek` · `leviahirsch1` · `dorkingham` · `levi@nascen.tech`* · `ACTUAL - transcribed from log` |
 | writer | `levi@nascentech.com` · `Haptic Info/Admin` (group calendar) |
 | freeBusyReader | `lh924@georgetown.edu` — GU domain policy; needs its own OAuth to fix |
 | reader | US Holidays |
 
-\* `nascen.tech` is slated for decommission; its events die with the account.
+\* `nascen.tech` is slated for decommission; its events die with the account. Do not target it
+for new work.
 
-`ACTUAL - transcribed from log` — separate calendar for `/log` output, keeps the plan clean.
+`ACTUAL - transcribed from log` — **`/log` only.** Keeps planning calendars clean.
 
 ## extendedProperties
 
@@ -66,7 +79,7 @@ as long as the OAuth consent screen stays "In production" (Testing expires them 
 with attendees mails every one of them. Attendee entries that look like people are often
 Google **Groups**: one address fans out to a whole team.
 
-## syncToken (for the eventual reconciler, not needed by v0.1)
+## syncToken (reconciler / later; not required for v0.x skill runs)
 
 Full sync of the primary calendar: 87 events, 0.4s. Delta with no changes returns 0 items.
 Delta after one edit returns exactly that item in 0.25s, carrying title and tags together.
@@ -83,6 +96,14 @@ Full resource: `title · notes · due · status · parent · position · links`.
 - `parent` is real one-level hierarchy.
 - A task **with** a due date appears in the Calendar UI; undated ones stay in the side panel,
   which is visible on the same page.
+- **Deleting a task list deletes every task in it.** Read first.
+
+Lists in active use (resolve id by title):
+
+| list title | role |
+| --- | --- |
+| `Scheduling queue` | wants a time, does not have one |
+| `My Tasks` | Google default / loose residue |
 
 ## The lake
 
@@ -96,5 +117,5 @@ Sources split into two different signals:
 | `dropper-excel` | **content** — what Levi was thinking about |
 | `claude-hook` / `grok-hook` | **presence** — when he was working, and on what |
 
-Read it via `collevity.lake.cli` / `collevity-read-day` (see `product/checkin/read_lake_day.py`).
+Read via `collevity.lake.cli` / `collevity-read-day` (launcher: `product/checkin/read_lake_day.py`).
 Do not reimplement lake reading.

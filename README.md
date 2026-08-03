@@ -26,10 +26,37 @@ Same **iCloud-safe external-gitdir** pattern as `collevity-tooling`.
 ~/.claude/skills/orchestrate              -> …/levi-skills/product/orchestrate
 ~/.claude/skills/session-save             -> …/levi-skills/product/session-save
 ~/.claude/skills/checkin                  -> …/levi-skills/product/checkin
+~/.claude/skills/schedule                 -> …/levi-skills/product/schedule
+~/.claude/skills/task                     -> …/levi-skills/product/task
+~/.claude/skills/log                      -> …/levi-skills/product/log
 ~/.claude/skills/build-learning-project   -> …/levi-skills/personal/build-learning-project
 ~/.claude/skills/_shared                  -> …/levi-skills/_shared
 ~/.claude/skills/spec/                    third-party clone (not this repo)
 ```
+
+## The Google-stratum trio
+
+`schedule`, `task`, and `log` sit over Google Workspace as Collevity's **first data
+stratum** — more limited than what Collevity will eventually hold, but already structured,
+already queryable, already on the phone.
+
+| Skill | Surface | Direction |
+|------|---------|-----------|
+| `schedule` | Calendar | forward — intent |
+| `task` | Tasks | forward — no time claimed yet |
+| `log` | Calendar (`ACTUAL`) | backward — what happened |
+
+They are separate because Levi names the surface when he speaks; a router guessing between
+them would solve a problem that does not exist. What they share lives in `_shared/`:
+
+| File | Holds |
+|------|-------|
+| `workspace-tags.md` | the `cv_*` tag schema; what is visible to Levi and what is not |
+| `domains.json` | domain → color, the single source of truth for color |
+| `google-workspace-mechanics.md` | API behaviour verified live, not read from docs |
+
+Chain: `checkin` builds the daily log → `log` transcribes it → eventually compared against
+what `schedule` projected.
 
 ## Everyday
 

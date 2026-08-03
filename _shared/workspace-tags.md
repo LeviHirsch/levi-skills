@@ -15,11 +15,24 @@ Written into `extendedProperties.private` on **calendar events** only.
 | key | required | values |
 | --- | --- | --- |
 | `cv_schema` | yes | `v1` |
-| `cv_domain` | yes | free text; see `domains.json`. **Not enforced** — new values are legal the first time they are used |
+| `cv_domain` | yes | free text. **Not a closed enum** — write what fits; see flexibility below |
 | `cv_sub` | no | free text, unlimited cardinality |
 | `cv_source` | yes | `schedule` · `task` · `log-transcription` · `manual` |
 | `cv_confidence` | `/log` only | `logged` (a time actually recorded) · `inferred` (bounded from other evidence) |
 | `cv_parent` | no | id of a containing block; see hierarchy below |
+
+### Domain schema stays flexible
+
+`domains.json` is a **current color map**, not a ratified ontology. Do not overcommit to it:
+
+- New domain strings are legal the first time they appear.
+- Missing from the map → use `_fallback` color; do not error, do not force a listed domain.
+- Boundaries still open (e.g. family vs relationships, whether `rhythm` is a domain at all,
+  single- vs multi-valued `cv_domain`). Use what fits *this* event; revise the map later.
+- Renames, merges, splits are cheap: query by old `cv_domain`, rewrite. Color is a projection
+  of the string, not the other way around.
+
+The point of `cv_domain` is queryability later — not to freeze vocabulary early.
 
 **`cv_source` meanings**
 
@@ -43,12 +56,14 @@ Server-side, exact, multi-key AND. This is the whole reason the scheme exists.
 
 ## Color is a projection, never a source of truth
 
-Events store `cv_domain`. Color is applied from `domains.json` at write (or by a recolor pass).
+Events store `cv_domain` (free text). Color is applied from the current `domains.json` map
+at write, or by a recolor pass after the map changes. The map can move; stored strings stay
+until rewritten.
 
 - **Recolor** — edit `domains.json`, re-run. ~13s for a day's events (proven).
 - **Rename a domain** — query the old value, rewrite it. Exact, no text matching.
 - **Merge / split** — same query, different rewrite.
-- **Add** — just use it. Unmapped domains take `_fallback` rather than erroring.
+- **Add** — just use the new string. Unmapped → `_fallback` color until the map catches up.
 
 ## Tasks cannot be tagged
 

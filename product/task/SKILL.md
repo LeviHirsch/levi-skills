@@ -3,7 +3,7 @@ name: task
 description: Capture something into Google Tasks that needs doing but claims no time yet — including tasks whose whole content is "schedule this". Also promotes a task to a calendar event once it gets a time. Use on /task, "add a task", "remind me to", "I need to", "put X in the queue", "I keep saying I'll meet up with X". For things that claim a time slot now, use /schedule instead.
 ---
 
-# /task (v0.2)
+# /task (v0.2.1)
 
 The surface for things that need to **not be forgotten** but do not claim a slot.
 

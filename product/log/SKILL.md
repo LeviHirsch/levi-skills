@@ -3,7 +3,7 @@ name: log
 description: Reconstruct a past day onto the ACTUAL calendar from the daily-tracking log plus the Collevity lake — timed blocks placed directly, untimed activity bounded from evidence, every block marked logged or inferred. The "actual" half of intent-vs-actual. Use on /log, "transcribe my day", "put yesterday on the calendar", "reconstruct <date>". For future events use /schedule.
 ---
 
-# /log (v0.2)
+# /log (v0.2.1)
 
 Turn a day that already happened into tagged blocks on the **ACTUAL** calendar.
 
@@ -80,8 +80,9 @@ Dropper is thought capture, not a ledger of what happened. The daily log is the 
    record become the same thing on ACTUAL.
 4. **Containers** — places / stretches that contain other blocks get their own event; children
    carry `cv_parent` = parent event id (set after parent is created).
-5. **Domain + color** from observation + `domains.json` (unmapped → `_fallback`). Domains are
-   observed; a day only shows what that day contained.
+5. **Domain + color** from observation. Write free-text `cv_domain` that fits; color from
+   `domains.json` if mapped, else `_fallback`. Do not force the day's work into the listed
+   set — the map is provisional and adjustable. A day only shows domains that day contained.
 6. **Draft → confirm → write** (or write small and correct). Do not treat the first pass as
    settled. Levi will catch what pure reading cannot.
 

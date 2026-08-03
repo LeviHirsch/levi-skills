@@ -1,5 +1,9 @@
 # schedule changelog
 
+## v0.2.1 — 2026-08-03
+
+Pass-1 follow-up: domain schema explicitly flexible / not overcommitted.
+
 ## v0.2 — 2026-08-03
 
 Pass-1 refine (gaps / contradictions / operability):

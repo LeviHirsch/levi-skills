@@ -1,5 +1,9 @@
 # log changelog
 
+## v0.2.1 — 2026-08-03
+
+Pass-1 follow-up: domain map provisional; do not shoehorn into listed keys.
+
 ## v0.2 — 2026-08-03
 
 Pass-1 refine (gaps / operability):

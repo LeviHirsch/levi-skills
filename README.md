@@ -52,7 +52,7 @@ them would solve a problem that does not exist. What they share lives in `_share
 | File | Holds |
 |------|-------|
 | `workspace-tags.md` | the `cv_*` tag schema; what is visible to Levi and what is not |
-| `domains.json` | domain → color, the single source of truth for color |
+| `domains.json` | provisional domain → color map (flexible; not a closed schema) |
 | `google-workspace-mechanics.md` | API behaviour verified live, not read from docs |
 | `skill-feedback-convention.md` | how per-skill `FEEDBACK.md` works |
 

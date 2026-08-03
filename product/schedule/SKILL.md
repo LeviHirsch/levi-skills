@@ -3,7 +3,7 @@ name: schedule
 description: Put something on Levi's Google Calendar from a loose natural-language description — pick the calendar, set the time, tag it by domain, apply color. Use on /schedule, "put X on the calendar", "schedule X", "add X to my calendar", "block time for X", or when Levi describes an event that should exist. For things that need doing but claim no time, use /task instead. For reconstructing a past day, use /log.
 ---
 
-# /schedule (v0.2)
+# /schedule (v0.2.1)
 
 Take one loose sentence and turn it into a correctly-placed, correctly-tagged calendar event.
 
@@ -92,8 +92,11 @@ you own — do not rely on them as a signal Levi will see):
 - `status: tentative` when he said tentative / soft / not locked
 - `transparency: transparent` when he wants a soft block that should not look busy
 
-Domains are **observed, not enforced**. Never refuse a domain because it is missing from
-`domains.json`.
+Domains are **observed and adjustable**, not a closed schema. `domains.json` is only today's
+color map. Never refuse or shoehorn a domain because it is missing or awkward in that file —
+write the free-text `cv_domain` that fits; unmapped gets `_fallback` color. Open questions in
+the map (family vs relationships, rhythm, multi-value, etc.) stay open; do not pretend they
+are settled.
 
 ### 5. Report
 
@@ -125,7 +128,7 @@ Feedback convention: `_shared/skill-feedback-convention.md`.
 | Put tags in the title | Title stays human; tags go in `extendedProperties` |
 | Re-ask something he already answered | Verify silently; speak only if the check disagrees |
 | Add attendees to be helpful | Never without explicit approval — it sends mail |
-| Refuse an unrecognized domain | Use it. Vocabulary is observed |
+| Refuse or shoehorn a domain into the map | Write free text; map is provisional |
 | Write to the ACTUAL calendar | That is `/log` |
 | Treat tentative / free-busy as UI-visible | They are not; surface state in the report if it matters |
 

@@ -1,9 +1,10 @@
 {
-  "_note": "Domain -> color map. Single source of truth for color. Events store cv_domain only; color is a projection applied by a recolor pass. Edit here and re-run the pass to recolor everything. Observed, not ratified - add freely.",
+  "_note": "Provisional domain -> color map. NOT a closed schema. Events store free-text cv_domain; this file only maps known strings to colorId. Observed from real weeks, not ratified. Add, rename, merge, drop freely — recolor pass updates the UI. Do not force events into listed keys.",
   "_schema": "v1",
   "_updated": "2026-08-03",
   "_fallback": { "colorId": "8", "colorName": "Graphite" },
-  "_ceiling": "Only 11 event colors exist. Cap COLORED domains at 11; cv_sub is unlimited.",
+  "_ceiling": "Only 11 event colors exist. Cap COLORED domains at 11; cv_sub is unlimited. Unmapped cv_domain uses _fallback.",
+  "_posture": "flexible and adjustable — prefer a new string + fallback color over shoehorning into a listed domain",
 
   "domains": {
     "income":       { "colorId": "5",  "colorName": "Banana",    "note": "job search, Frontlines/Cody, contracts, paycheck path" },
@@ -19,6 +20,7 @@
     "family vs relationships may be one domain or two",
     "discernment (Thailand, missions, what-to-work-on) has no home yet",
     "rhythm may not be a domain at all - it may be the 'standing pattern' object type",
-    "cv_domain single- or multi-valued: undecided"
+    "cv_domain single- or multi-valued: undecided",
+    "list below is a starting set from early use — expect it to change"
   ]
 }

@@ -10,10 +10,13 @@ Defect fixes + cross-skill posture.
 - Now the destination for `/orchestrate`'s parking-lot task-level items, and for commitments
   surfaced at the end of `/checkin`
 
+## v0.6.1 — 2026-08-03
+
+Loosen promote gate: intent to calendar, not precise clock. Fuzzy when OK (schedule guesses).
+
 ## v0.6 — 2026-08-03
 
-Suite compatibility: surfaces map; fed by checkin/orchestrate offers only; promote only on
-his time in-turn.
+Suite compatibility: surfaces map; fed by checkin/orchestrate offers; promote on calendar intent.
 
 ## v0.5 — 2026-08-03
 

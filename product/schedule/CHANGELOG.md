@@ -10,6 +10,10 @@ Defect fixes + cross-skill posture.
   promoted task
 - Nothing routes *into* `/schedule` automatically — `/orchestrate` names dated gates and stops
 
+## v0.6.1 — 2026-08-03
+
+Fuzzy when is first-class; gap-fill guesses stated; do not demand clock precision.
+
 ## v0.6 — 2026-08-03
 
 Suite compatibility: link `_shared/surfaces.md`; suite position (not ACTUAL, not task).

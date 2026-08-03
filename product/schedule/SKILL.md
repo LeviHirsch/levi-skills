@@ -1,14 +1,19 @@
 ---
 name: schedule
-description: Put something on Levi's Google Calendar from a loose natural-language description — pick the calendar, set the time, tag it by domain, apply color. Use on /schedule, "put X on the calendar", "schedule X", "add X to my calendar", "block time for X", or when Levi describes an event that should exist. For things that need doing but claim no time, use /task instead. For reconstructing a past day, use /log.
+description: Put something on Levi's Google Calendar from a loose natural-language description — pick the calendar, set the time (fuzzy OK), tag it by domain, apply color. Use on /schedule, "put X on the calendar", "schedule X", "add X to my calendar", "block time for X", or when Levi describes an event that should exist. Precise clock not required. For things that need doing but are not yet events, use /task instead. For reconstructing a past day, use /log.
 ---
 
-# /schedule (v0.6)
+# /schedule (v0.6.1)
 
-Loose sentence → plan-calendar event(s). **He names the surface** — if he said calendar, do
-not turn it into a task. Only place what he asked for (or already has a real time).
+Loose sentence → plan-calendar event(s). **He names the surface** — if he said calendar /
+schedule / put it on the calendar, do that. Do not re-route into a task. Only create what he
+asked for — not extra "helpful" blocks.
 
-Suite map: `~/.claude/skills/_shared/surfaces.md`. No time claimed → `/task`. Past day →
+**When can be fuzzy.** "Tuesday afternoon", "next three weeks", "830 their time" are enough;
+guess end/duration when missing, state the guess. Ask only when the when-window is truly
+unusable (no day, no range, weekday+date conflict).
+
+Suite map: `~/.claude/skills/_shared/surfaces.md`. Not on calendar yet → `/task`. Past day →
 `/log`. Standing arc → `/orchestrate`. **Never** write ACTUAL here.
 
 ```
@@ -52,12 +57,16 @@ in mechanics; short form:
 
 Never: `ACTUAL…` (`/log` only), `nascen.tech`, or one-calendar-per-domain. Resolve id by title.
 
-**3. Gaps** — ask **times and people** only. Guess the rest; say so. Short replies.
+**3. Gaps** — short replies. Guess freely where the cost of being wrong is low; **state guesses**.
 
+- Fuzzy when → place a reasonable block (or short series); say what you assumed  
 - No end → ~1h (or longer if obvious); state it  
+- No clock but a day/window → pick a sane start inside the window; state it  
+- Truly no when at all and he still said "calendar" → ask once for a window, not a full interview  
 - Location/description empty is fine  
 - Domain free text; map is provisional  
-- Attendees only with explicit yes (`sendUpdates` defaults to `all`; Groups fan out)
+- Attendees only with explicit yes (`sendUpdates` defaults to `all`; Groups fan out)  
+  (people are the high-cost gap — not clock precision)
 
 **4. Write** (raw API for tags)
 
@@ -87,7 +96,7 @@ end and keep past → PATCH `UNTIL` (parent delete kills history).
 | | |
 | --- | --- |
 | Flag overlaps | Often fine |
-| Propose unasked blocks | Only what he asked / already timed |
+| Propose unasked blocks | Only what he asked to put on the calendar |
 | Tags in title | Human title only |
 | Re-ask answered facts | Check silently |
 | Helpful attendees | Explicit yes only |

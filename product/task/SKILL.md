@@ -1,16 +1,17 @@
 ---
 name: task
-description: Capture something into Google Tasks that needs doing but claims no time yet — including tasks whose whole content is "schedule this". Also promotes a task to a calendar event once it gets a time. Use on /task, "add a task", "remind me to", "I need to", "put X in the queue", "I keep saying I'll meet up with X". For things that claim a time slot now, use /schedule instead.
+description: Capture something into Google Tasks that needs doing but claims no time yet — including tasks whose whole content is "schedule this". Also promotes a task to a calendar event when he wants it on the calendar (precise clock optional; schedule handles fuzzy when). Use on /task, "add a task", "remind me to", "I need to", "put X in the queue", "I keep saying I'll meet up with X". For things that should exist as events now, use /schedule instead.
 ---
 
-# /task (v0.6)
+# /task (v0.6.1)
 
 Must not forget · no calendar slot yet. **He names the surface.** "Book Dan" stays a task
 even if the doing is later scheduling — do not turn it into an event to be helpful.
 
 Suite map: `~/.claude/skills/_shared/surfaces.md`. Fed by **offers** from `/checkin` close and
-`/orchestrate` 6b — those skills name items; this skill writes only when he accepts or
-invokes `/task` himself. Timed event → `/schedule`. Standing arc → registry, not here.
+`/orchestrate` 6b — those skills name items; this skill writes when he accepts or invokes
+`/task`. When he wants the item **on the calendar**, promote via `/schedule` (times can be
+fuzzy — schedule guesses). Standing arc → registry, not here.
 
 ```
 /task grab coffee with parker
@@ -60,16 +61,18 @@ No tags, no color. Unknown fields **silently drop**. Domain (if any) → a line 
 
 ## Promote → `/schedule`
 
-When **he** gives a time or says schedule it **in this turn** (not because another skill
-hinted):
+When **he wants it on the calendar** — "schedule it", "put it on the calendar", names a day
+or window, or otherwise claims a slot. **Precise clock time is not required.** Fuzzy is
+normal ("Tuesday afternoon", "sometime next week", "after Sabrina"); `/schedule` fills gaps
+(guess duration, ask only if truly stuck).
 
-1. Run the `/schedule` write path (title, notes, time) — same conversation, his go  
-2. Event: `cv_source=schedule` + `cv_origin=task` (who wrote vs where it came from)  
-3. **Close the task** — no open shadow  
+1. Run the `/schedule` write path (title, notes, whatever when he gave)  
+2. Event: `cv_source=schedule` + `cv_origin=task`  
+3. **Close the task** after the event exists — no open shadow  
 4. Notes → event description  
 
-Do not promote on your own. Do not promote from an orchestrate/checkin **offer** until he
-accepts and a time exists.
+Do **not** promote just because a task is in Scheduling queue, or because checkin/orchestrate
+*offered* `/task`. Promote when he is steering toward calendar, not when you are "being helpful."
 
 ## Don't
 

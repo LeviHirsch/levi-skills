@@ -2,7 +2,7 @@
 
 Read **Open** on every invoke. Honor `prefer` / `dislike`.
 This file is skill taste only — not the thread registry, not a session log.
-Convention: `_shared/skill-feedback-convention.md`.
+Convention: `~/.claude/skills/_shared/skill-feedback-convention.md`.
 
 ## Open
 

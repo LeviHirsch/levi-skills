@@ -16,12 +16,6 @@ This file is skill taste only — not the thread registry, not a session log.
 - **context:** Invented mid-session when walking ~24 threads one-by-one felt too heavy (RTX already submitted = waiting, not full review). Validated across full Live table; closed with batch registry write. Captured in session SPP `2026-08-01-2009_orchestrate-checkin-catchup__00_COLLEVITY` Open threads under `minimal-orchestrator` and raw transcript process block — **not** previously as skill FEEDBACK. Related open: taxonomy dislike (no rename yet); task-level surface idea; selection UI preference.
 - **status:** open — rollup for next skill update; no apply yet
 
-### 2026-08-01 — no clear surface for task-level items (below thread)
-- **type:** idea
-- **note:** Orchestrate/registry tracks thread-level arcs but not task-level items. Levi is not sure a clear way exists yet for things that matter operationally but are not full-thread-worthy (library-day todos, one-off preps, rhythm nudges). Related to broader Collevity development; wants a **minimal** approach to surfacing task-level stuff for orchestration — not a second heavy system. Do not invent a full task app; prefer thinnest workable layer (scratch, day log, or light task list hooked to orchestrate).
-- **context:** After 2026-08-01 status pass; parking-lot items and dynamic threads (Thailand, Spanish kids, Korean, budget, Autumn/Quinn Mon) exposed the gap.
-- **status:** open — no apply
-
 ### 2026-08-01 — state/applicability taxonomy not loved; no change yet
 - **type:** dislike
 - **note:** Levi does not love the registry status taxonomy (`state` active/blocked/dormant/done + `applicability` now/soon/when-gate/parked/skip). Not fully intuitive; jargon tax still applies. Explicit instruction: **do not rewrite the skill or rename columns right now** — leave the dialect as-is on disk. Chat-side status walkthroughs may use plainer wording, but no taxonomy redesign until he opens that work.
@@ -54,7 +48,11 @@ This file is skill taste only — not the thread registry, not a session log.
 
 ## Applied / closed
 
-_(none yet)_
+### 2026-08-01 — no clear surface for task-level items (below thread)
+- **type:** idea
+- **note:** Orchestrate/registry tracks thread-level arcs but not task-level items. Levi is not sure a clear way exists yet for things that matter operationally but are not full-thread-worthy (library-day todos, one-off preps, rhythm nudges). Related to broader Collevity development; wants a **minimal** approach to surfacing task-level stuff for orchestration — not a second heavy system. Do not invent a full task app; prefer thinnest workable layer (scratch, day log, or light task list hooked to orchestrate).
+- **context:** After 2026-08-01 status pass; parking-lot items and dynamic threads (Thailand, Spanish kids, Korean, budget, Autumn/Quinn Mon) exposed the gap.
+- **status:** **applied 2026-08-03** — `/task` is now that surface (Google Tasks: `Scheduling queue` for wants-a-time, `My Tasks` for loose to-dos). SKILL step 6b routes parking-lot "task-level not rows" items there as an offer. Deliberately thin — no new system, no second registry. The paired guard is also in: orchestrate must **not** route threads to `/schedule`, which is the over-eager-promotion failure logged separately below.
 
 <!-- Newest Open first:
 ### YYYY-MM-DD — title

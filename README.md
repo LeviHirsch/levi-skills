@@ -56,8 +56,26 @@ Domains = tags + color, not separate calendars. Shared substrate:
 | `google-workspace-mechanics.md` | verified API / access / calendar pick |
 | `skill-feedback-convention.md` | per-skill `FEEDBACK.md` |
 
-Chain: `checkin` → daily log → `/log` → ACTUAL (history for later plan comparison).  
 Each skill: `/<skill> feedback …` → its `FEEDBACK.md`.
+
+### Cross-skill edges
+
+Every edge is an **offer at a boundary**, never an automatic invocation. One skill surfaces;
+Levi decides; the next skill runs because he said so.
+
+```
+checkin ──close──▶ offer /log <date>        (only when the day is core-complete)
+        └─close──▶ offer /task              (commitments the interview surfaced)
+   log ──gather0─▶ requires /checkin first  (missing log ⇒ mostly-inferred day)
+orchestrate ─6b──▶ offer /task              (parking-lot "task-level not rows")
+  task ──promote▶ /schedule                 (on his say-so; then close the task)
+```
+
+**Deliberately absent: `orchestrate → /schedule`.** A thread may carry a dated gate — the pass
+names it and stops. Turning open work into calendar blocks is Levi's call. This is the
+over-eager-promotion failure his FEEDBACK logs twice.
+
+Chain: `checkin` → daily log → `/log` → ACTUAL (history for later plan comparison).
 
 ## Everyday
 

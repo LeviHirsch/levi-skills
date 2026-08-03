@@ -1,5 +1,15 @@
 # task changelog
 
+## v0.5 — 2026-08-03
+
+Defect fixes + cross-skill posture.
+
+- `_shared/` refs made absolute — they did not resolve from the load path
+- Promotion writes `cv_source=schedule` + `cv_origin=task`, resolving a contradiction with
+  `/schedule`
+- Now the destination for `/orchestrate`'s parking-lot task-level items, and for commitments
+  surfaced at the end of `/checkin`
+
 ## v0.4 — 2026-08-03
 
 Pass-3: simplicity / clarity / readability. Same rules; denser layout; uniform shape.

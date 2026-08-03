@@ -3,7 +3,7 @@ name: log
 description: Reconstruct a past day onto the ACTUAL calendar from the daily-tracking log plus the Collevity lake — timed blocks placed directly, untimed activity bounded from evidence, every block marked logged or inferred. The "actual" half of intent-vs-actual. Use on /log, "transcribe my day", "put yesterday on the calendar", "reconstruct <date>". For future events use /schedule.
 ---
 
-# /log (v0.4)
+# /log (v0.5)
 
 Past day → blocks on **`ACTUAL - transcribed from log`**. Not `/schedule`: backward, batch,
 evidence-bound. Own calendar so primary stays clean.
@@ -41,6 +41,10 @@ Keep gather and transcribe separate (better retrieval later replaces gather only
 
 ### gather
 
+0. **Check the daily log for N exists and is `core-complete`.** If it is missing, or the core
+   metrics are mostly blank, **stop and say `/checkin <date>` first.** The log is the spine;
+   without it the lake alone yields a mostly-`inferred` day, which is the failure mode this
+   skill exists to avoid. Levi can override — but he should be the one choosing that.
 1. Daily log **N and N+1** (evenings / prior-night sleep often land in N+1)  
 2. Lake N (+ edges N−1/N+1): `python3 <reader> <date>` — do not reimplement  
 3. Keyword sweep for later mentions of N  

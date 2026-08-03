@@ -1,5 +1,15 @@
 # schedule changelog
 
+## v0.5 — 2026-08-03
+
+Defect fixes + cross-skill posture.
+
+- `_shared/` refs made absolute (`~/.claude/skills/_shared/…`) — they did not resolve from
+  the load path
+- `cv_source` now always means which skill wrote the event; new `cv_origin=task` records a
+  promoted task
+- Nothing routes *into* `/schedule` automatically — `/orchestrate` names dated gates and stops
+
 ## v0.4 — 2026-08-03
 
 Pass-3: simplicity / clarity / readability. Same rules; denser layout; calendar detail

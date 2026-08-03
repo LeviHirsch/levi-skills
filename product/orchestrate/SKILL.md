@@ -121,6 +121,17 @@ Edit the registry so disk matches this pass:
 - Keep the markdown table intact; do not rewrite the whole file casually.
 - No emoji in registry text.
 
+### 6b. Task-level items → `/task`
+
+The parking lot's "task-level not rows" line collects items that matter operationally but are
+not standing arcs (CVS pickup, reschedule X, one-off preps). **`/task` is now the surface for
+those** — they no longer have to sit in the registry as residue.
+
+- Name them and **offer** to queue them. `Scheduling queue` if it wants a time and lacks one;
+  `My Tasks` otherwise.
+- Move an item out of the parking lot only once it has actually been queued.
+- Do **not** route a standing arc here. If it deserves a row, it deserves a row.
+
 ### 7. CLOSE
 
 Report in one short screen:
@@ -133,6 +144,10 @@ Report in one short screen:
 
 If this chat is ending and the pass is worth archiving: offer  
 `/session-save orchestrator-<date>`.
+
+**Do not route threads to `/schedule`.** A thread may carry a dated gate — say so, and stop.
+Turning open work into calendar blocks is Levi's call, not the pass's. This is the same
+failure the FEEDBACK logs as over-eager promotion, and he has named it twice.
 
 ---
 

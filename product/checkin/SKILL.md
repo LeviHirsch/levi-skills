@@ -77,6 +77,19 @@ Do **not** block check-in. One glance only when something looks off:
 - Brief summary: what got logged, the day's status (`core-complete`? still `open`?), and anything still unknown or flagged for clarification.
 - If core-complete, offer (don't force) to close or leave open for later reflection.
 
+### 9. Hand-off offers (offer once, never act)
+Two downstream skills take their input from what step 6 just wrote. Name them in one line
+each and stop — do not invoke, do not do the work, do not ask twice.
+
+- **`/log <date>`** — transcribe this day onto the `ACTUAL` calendar. Only worth offering
+  once the day is `core-complete`; `/log` on a thin log produces a mostly-inferred day.
+  This is the moment its input exists and Levi is already in the day's context.
+- **`/task`** — if the interview surfaced a commitment with no home ("told Parker we'd grab
+  coffee", "said I'd pray for Aden"), name it and offer to queue it. Surface the item in his
+  own words; **do not** classify it, schedule it, or promote it to a registry thread.
+
+If he says nothing, drop both. A declined offer is not re-raised next check-in.
+
 ## Deferred to later versions (do NOT build into v1)
 - **Credibility cascade** — per-field provenance (user-stated vs AI-extracted), confidence scoring, conflict-weighting. Later version.
 - Scheduled/daemon triggering (Stage 2), Dropper auto-ingestion + adaptive questioning (Stage 3), day/week-review folding (Stage 4).

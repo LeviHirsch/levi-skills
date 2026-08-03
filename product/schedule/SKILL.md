@@ -3,7 +3,7 @@ name: schedule
 description: Put something on Levi's Google Calendar from a loose natural-language description — pick the calendar, set the time, tag it by domain, apply color. Use on /schedule, "put X on the calendar", "schedule X", "add X to my calendar", "block time for X", or when Levi describes an event that should exist. For things that need doing but claim no time, use /task instead. For reconstructing a past day, use /log.
 ---
 
-# /schedule (v0.4)
+# /schedule (v0.5)
 
 Loose sentence → calendar event(s). **He names the surface** — if he said calendar, do not
 turn it into a task. Only place what he asked for (or already has a real time).

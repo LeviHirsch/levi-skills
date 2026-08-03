@@ -51,6 +51,7 @@ Domains = tags + color, not separate calendars. Shared substrate:
 
 | File | Holds |
 |------|-------|
+| `surfaces.md` | where things go; offer-only edges; routing reflexes |
 | `workspace-tags.md` | `cv_*` schema; visibility |
 | `domains.json` | provisional domain → color map |
 | `google-workspace-mechanics.md` | verified API / access / calendar pick |
@@ -58,22 +59,22 @@ Domains = tags + color, not separate calendars. Shared substrate:
 
 Each skill: `/<skill> feedback …` → its `FEEDBACK.md`.
 
-### Cross-skill edges
+### Suite surfaces + edges
 
-Every edge is an **offer at a boundary**, never an automatic invocation. One skill surfaces;
-Levi decides; the next skill runs because he said so.
+Canonical map: **`_shared/surfaces.md`** (where things go, routing reflexes, offer-only edges).
+
+Every edge is an **offer at a boundary**, never an automatic invocation.
 
 ```
 checkin ──close──▶ offer /log <date>        (only when the day is core-complete)
         └─close──▶ offer /task              (commitments the interview surfaced)
-   log ──gather0─▶ requires /checkin first  (missing log ⇒ mostly-inferred day)
+   log ──gather0─▶ offer /checkin first     (missing/thin log; he may override)
 orchestrate ─6b──▶ offer /task              (parking-lot "task-level not rows")
   task ──promote▶ /schedule                 (on his say-so; then close the task)
 ```
 
 **Deliberately absent: `orchestrate → /schedule`.** A thread may carry a dated gate — the pass
-names it and stops. Turning open work into calendar blocks is Levi's call. This is the
-over-eager-promotion failure his FEEDBACK logs twice.
+names it and stops. Turning open work into calendar blocks is Levi's call.
 
 Chain: `checkin` → daily log → `/log` → ACTUAL (history for later plan comparison).
 

@@ -10,6 +10,15 @@ Defect fixes + cross-skill posture.
 - Now the destination for `/orchestrate`'s parking-lot task-level items, and for commitments
   surfaced at the end of `/checkin`
 
+## v0.6 — 2026-08-03
+
+Suite compatibility: surfaces map; fed by checkin/orchestrate offers only; promote only on
+his time in-turn.
+
+## v0.5 — 2026-08-03
+
+Claude: `cv_source=schedule` + `cv_origin=task` on promote; absolute refs; edges as offers.
+
 ## v0.4 — 2026-08-03
 
 Pass-3: simplicity / clarity / readability. Same rules; denser layout; uniform shape.

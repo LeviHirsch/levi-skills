@@ -15,12 +15,15 @@ the Google UI to reflect this.
 
 ## Paths
 
+Absolute — resolvable from any skill load path (`~/.claude/skills/<name>/`).
+
 | what | where |
 | --- | --- |
-| Daily logs | `00_COLLEVITY/03_TACTIC/daily-tracking/<YYYY-MM-DD>.md` |
-| Lake | `00_COLLEVITY/03_TACTIC/_DATA/collevity_lake.jsonl` |
+| Daily logs | `/Users/levi/Library/Mobile Documents/com~apple~CloudDocs/00_COLLEVITY/03_TACTIC/daily-tracking/<YYYY-MM-DD>.md` |
+| Lake | `/Users/levi/Library/Mobile Documents/com~apple~CloudDocs/00_COLLEVITY/03_TACTIC/_DATA/collevity_lake.jsonl` |
 | Lake reader | `~/.claude/skills/checkin/read_lake_day.py` |
-| ACTUAL calendar | `ACTUAL - transcribed from log` |
+| ACTUAL calendar | `ACTUAL - transcribed from log` (name; resolve id by title) |
+| Suite surfaces map | `~/.claude/skills/_shared/surfaces.md` |
 | OAuth | `~/.config/collevity/gcal/` |
 
 Resolve calendar and task-list **ids by title** at runtime. Do not hardcode ids.

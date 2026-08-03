@@ -1,11 +1,15 @@
 ---
 name: checkin
-description: Daily life-tracking check-in. Reads the target day's Dropper entries + any existing daily log, extracts what's already known, then conversationally draws out the rest of the user's data for that day (sleep, meds, supplements, work, devos/prayer, exercise, energy/focus/mood, plus free reflection) and writes/updates the daily-tracking log. Idempotent — run any time of day, builds on what's already recorded, never redoes filled fields. Use on /checkin, or "do my check-in", "log my day", "daily tracking", "catch up tracking for <day>".
+description: Daily life-tracking check-in. Reads the target day's Dropper entries + any existing daily log, extracts what's already known, then conversationally draws out the rest of the user's data for that day (sleep, meds, supplements, work, devos/prayer, exercise, energy/focus/mood, plus free reflection) and writes/updates the daily-tracking log. Idempotent — run any time of day, builds on what's already recorded, never redoes filled fields. Use on /checkin, "do my check-in", "daily tracking", "catch up tracking for <day>". For putting a past day onto the ACTUAL calendar, use /log — not this skill.
 ---
 
 # /checkin — daily tracking interview (Stage 1, crude)
 
 Goal: in a few minutes, capture Levi's data for one day into its daily-tracking log — by **extracting what's already known first**, then **conversationally drawing out the rest**. Fast, flexible, and safe to run repeatedly.
+
+**Not `/log`.** This skill fills the markdown daily-tracking file. `/log` later may transcribe
+a core-complete day onto the ACTUAL calendar — only if he accepts the close offer (step 9).
+Suite map: `~/.claude/skills/_shared/surfaces.md`.
 
 ## Paths
 - Daily logs: `/Users/levi/Library/Mobile Documents/com~apple~CloudDocs/00_COLLEVITY/03_TACTIC/daily-tracking/`
@@ -78,17 +82,16 @@ Do **not** block check-in. One glance only when something looks off:
 - If core-complete, offer (don't force) to close or leave open for later reflection.
 
 ### 9. Hand-off offers (offer once, never act)
-Two downstream skills take their input from what step 6 just wrote. Name them in one line
-each and stop — do not invoke, do not do the work, do not ask twice.
+Downstream skills may want what step 6 wrote. **Name in one line each and stop** — do not
+invoke, do not do their work, do not ask twice. Full map: `~/.claude/skills/_shared/surfaces.md`.
 
-- **`/log <date>`** — transcribe this day onto the `ACTUAL` calendar. Only worth offering
-  once the day is `core-complete`; `/log` on a thin log produces a mostly-inferred day.
-  This is the moment its input exists and Levi is already in the day's context.
-- **`/task`** — if the interview surfaced a commitment with no home ("told Parker we'd grab
-  coffee", "said I'd pray for Aden"), name it and offer to queue it. Surface the item in his
-  own words; **do not** classify it, schedule it, or promote it to a registry thread.
+- **`/log <date>`** — only if this day is now `core-complete`. Transcribe onto `ACTUAL`.
+  Thin log → mostly-inferred day; do not offer on open/incomplete days.
+- **`/task …`** — only if the interview surfaced a commitment with no home. Quote **his
+  words**. Do **not** invent a due date, pick the list for him unless obvious, schedule it,
+  or push it into the thread registry.
 
-If he says nothing, drop both. A declined offer is not re-raised next check-in.
+If he says nothing, drop both. Declined ≠ re-raise next check-in.
 
 ## Deferred to later versions (do NOT build into v1)
 - **Credibility cascade** — per-field provenance (user-stated vs AI-extracted), confidence scoring, conflict-weighting. Later version.

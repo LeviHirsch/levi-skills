@@ -8,6 +8,9 @@ description: Run a minimal orchestrator pass — open the thread registry, judge
 Tell Levi **what is open**, **where each left off**, and **what is worth resuming now**.
 
 Do **not** do the thread work. Do **not** replace `/session-save`, `/checkin`, or the plan/DAG `orchestrator-run`.
+Do **not** invent calendar blocks or run `/schedule` from a pass (see 6b + close guard).
+
+Suite surfaces (threads vs tasks vs calendar): `~/.claude/skills/_shared/surfaces.md`.
 
 ```
 /orchestrate  →  work session  →  /session-save  →  /orchestrate …
@@ -121,16 +124,17 @@ Edit the registry so disk matches this pass:
 - Keep the markdown table intact; do not rewrite the whole file casually.
 - No emoji in registry text.
 
-### 6b. Task-level items → `/task`
+### 6b. Task-level items → offer `/task`
 
 The parking lot's "task-level not rows" line collects items that matter operationally but are
-not standing arcs (CVS pickup, reschedule X, one-off preps). **`/task` is now the surface for
-those** — they no longer have to sit in the registry as residue.
+not standing arcs (CVS pickup, reschedule X, one-off preps). **`/task` is the surface** —
+not a new registry row, not a calendar event.
 
-- Name them and **offer** to queue them. `Scheduling queue` if it wants a time and lacks one;
-  `My Tasks` otherwise.
-- Move an item out of the parking lot only once it has actually been queued.
-- Do **not** route a standing arc here. If it deserves a row, it deserves a row.
+- **Offer** to queue (do not invoke `/task` yourself). His words for the title.
+- List hint only: `Scheduling queue` if it wants a time and lacks one; `My Tasks` otherwise.
+  Do not invent due dates.
+- Clear a parking-lot bullet only after it is actually queued (or he declines / drops it).
+- Standing multi-session arcs stay rows (`intake`) — never demoted to Tasks to tidy the table.
 
 ### 7. CLOSE
 
@@ -220,6 +224,9 @@ Do not log project work, session diaries, or notes aimed at other skills here.
 | Create many rows from one multi-arc SPP | Ask which arcs should stand |
 | Treat the session folder slug as the thread id | Use the durable thread slug |
 | Invent a precise total ranking | Use `now` / `soon` / `when-gate` / `parked` |
+| Auto-`/schedule` or invent calendar blocks | Name dated gates; stop |
+| Auto-`/task` or invent due dates | Offer queue; he accepts |
+| Park residue as fake threads | Offer `/task` (6b) |
 
 ---
 

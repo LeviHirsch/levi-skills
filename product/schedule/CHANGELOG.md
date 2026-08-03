@@ -10,6 +10,15 @@ Defect fixes + cross-skill posture.
   promoted task
 - Nothing routes *into* `/schedule` automatically — `/orchestrate` names dated gates and stops
 
+## v0.6 — 2026-08-03
+
+Suite compatibility: link `_shared/surfaces.md`; suite position (not ACTUAL, not task).
+Holds Claude v0.5 defect fixes + offer-only edges.
+
+## v0.5 — 2026-08-03
+
+Claude: absolute refs; `cv_origin`; cross-skill edges as offers; color fallback rule.
+
 ## v0.4 — 2026-08-03
 
 Pass-3: simplicity / clarity / readability. Same rules; denser layout; calendar detail

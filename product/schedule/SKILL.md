@@ -3,10 +3,13 @@ name: schedule
 description: Put something on Levi's Google Calendar from a loose natural-language description — pick the calendar, set the time, tag it by domain, apply color. Use on /schedule, "put X on the calendar", "schedule X", "add X to my calendar", "block time for X", or when Levi describes an event that should exist. For things that need doing but claim no time, use /task instead. For reconstructing a past day, use /log.
 ---
 
-# /schedule (v0.5)
+# /schedule (v0.6)
 
-Loose sentence → calendar event(s). **He names the surface** — if he said calendar, do not
-turn it into a task. Only place what he asked for (or already has a real time).
+Loose sentence → plan-calendar event(s). **He names the surface** — if he said calendar, do
+not turn it into a task. Only place what he asked for (or already has a real time).
+
+Suite map: `~/.claude/skills/_shared/surfaces.md`. No time claimed → `/task`. Past day →
+`/log`. Standing arc → `/orchestrate`. **Never** write ACTUAL here.
 
 ```
 /schedule lunch with cody tuesday noon at st elmos
@@ -19,6 +22,7 @@ turn it into a task. Only place what he asked for (or already has a real time).
 
 | | |
 | --- | --- |
+| Suite surfaces | `~/.claude/skills/_shared/surfaces.md` |
 | Tags / visibility | `~/.claude/skills/_shared/workspace-tags.md` |
 | Color map (provisional) | `~/.claude/skills/_shared/domains.json` |
 | API, access, calendar pick | `~/.claude/skills/_shared/google-workspace-mechanics.md` |

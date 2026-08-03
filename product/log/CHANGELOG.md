@@ -10,6 +10,15 @@ Defect fixes + the checkin dependency made explicit.
   day, which is the failure this skill exists to avoid
 - `/checkin` now offers `/log` at close, once the day is `core-complete`
 
+## v0.6 — 2026-08-03
+
+Suite compatibility: surfaces map; absolute daily-log path; gather0 is offer-/checkin not
+auto-invoke; disambiguate from checkin "daily tracking".
+
+## v0.5 — 2026-08-03
+
+Claude: gather0 thin-log gate; absolute shared refs; edges as offers.
+
 ## v0.4 — 2026-08-03
 
 Pass-3: simplicity / clarity / readability. Same rules; denser layout; uniform shape.

@@ -3,10 +3,14 @@ name: task
 description: Capture something into Google Tasks that needs doing but claims no time yet — including tasks whose whole content is "schedule this". Also promotes a task to a calendar event once it gets a time. Use on /task, "add a task", "remind me to", "I need to", "put X in the queue", "I keep saying I'll meet up with X". For things that claim a time slot now, use /schedule instead.
 ---
 
-# /task (v0.5)
+# /task (v0.6)
 
 Must not forget · no calendar slot yet. **He names the surface.** "Book Dan" stays a task
 even if the doing is later scheduling — do not turn it into an event to be helpful.
+
+Suite map: `~/.claude/skills/_shared/surfaces.md`. Fed by **offers** from `/checkin` close and
+`/orchestrate` 6b — those skills name items; this skill writes only when he accepts or
+invokes `/task` himself. Timed event → `/schedule`. Standing arc → registry, not here.
 
 ```
 /task grab coffee with parker
@@ -19,6 +23,7 @@ even if the doing is later scheduling — do not turn it into an event to be hel
 
 | | |
 | --- | --- |
+| Suite surfaces | `~/.claude/skills/_shared/surfaces.md` |
 | Tasks limits | `~/.claude/skills/_shared/workspace-tags.md` |
 | API | `~/.claude/skills/_shared/google-workspace-mechanics.md` |
 | Feedback Open | `FEEDBACK.md` (skim on invoke) |
@@ -55,15 +60,16 @@ No tags, no color. Unknown fields **silently drop**. Domain (if any) → a line 
 
 ## Promote → `/schedule`
 
-When **he** gives a time or says schedule it now:
+When **he** gives a time or says schedule it **in this turn** (not because another skill
+hinted):
 
-1. `/schedule` (title, notes, time)  
-2. Event gets `cv_source=schedule` + `cv_origin=task` — source = who wrote it, origin = where
-   it came from  
+1. Run the `/schedule` write path (title, notes, time) — same conversation, his go  
+2. Event: `cv_source=schedule` + `cv_origin=task` (who wrote vs where it came from)  
 3. **Close the task** — no open shadow  
 4. Notes → event description  
 
-Do not promote on your own.
+Do not promote on your own. Do not promote from an orchestrate/checkin **offer** until he
+accepts and a time exists.
 
 ## Don't
 

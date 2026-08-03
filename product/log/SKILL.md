@@ -3,12 +3,14 @@ name: log
 description: Reconstruct a past day onto the ACTUAL calendar from the daily-tracking log plus the Collevity lake — timed blocks placed directly, untimed activity bounded from evidence, every block marked logged or inferred. The "actual" half of intent-vs-actual. Use on /log, "transcribe my day", "put yesterday on the calendar", "reconstruct <date>". For future events use /schedule.
 ---
 
-# /log (v0.5)
+# /log (v0.6)
 
 Past day → blocks on **`ACTUAL - transcribed from log`**. Not `/schedule`: backward, batch,
 evidence-bound. Own calendar so primary stays clean.
 
-`/checkin` writes the daily log · `/log` reads log + lake · writes ACTUAL.
+Suite map: `~/.claude/skills/_shared/surfaces.md`.  
+Chain: `/checkin` writes daily log → `/log` reads log + lake → ACTUAL.  
+Not the skill for "log my day" metrics — that is `/checkin`.
 
 ```
 /log 2026-08-01
@@ -20,12 +22,13 @@ evidence-bound. Own calendar so primary stays clean.
 
 | | |
 | --- | --- |
+| Suite surfaces | `~/.claude/skills/_shared/surfaces.md` |
 | Tags | `~/.claude/skills/_shared/workspace-tags.md` |
 | Color map (provisional) | `~/.claude/skills/_shared/domains.json` |
 | API + lake | `~/.claude/skills/_shared/google-workspace-mechanics.md` |
 | Feedback Open | `FEEDBACK.md` (skim on invoke) |
 | Calendar | `ACTUAL - transcribed from log` **only** |
-| Daily logs | `00_COLLEVITY/03_TACTIC/daily-tracking/<YYYY-MM-DD>.md` |
+| Daily logs | `/Users/levi/Library/Mobile Documents/com~apple~CloudDocs/00_COLLEVITY/03_TACTIC/daily-tracking/<YYYY-MM-DD>.md` |
 | Lake reader | `~/.claude/skills/checkin/read_lake_day.py` |
 | Hub OAuth | `levihirsch0@gmail.com` · `~/.config/collevity/gcal/` |
 
@@ -41,10 +44,10 @@ Keep gather and transcribe separate (better retrieval later replaces gather only
 
 ### gather
 
-0. **Check the daily log for N exists and is `core-complete`.** If it is missing, or the core
-   metrics are mostly blank, **stop and say `/checkin <date>` first.** The log is the spine;
-   without it the lake alone yields a mostly-`inferred` day, which is the failure mode this
-   skill exists to avoid. Levi can override — but he should be the one choosing that.
+0. **Daily log for N must exist and be usable.** If missing or core metrics mostly blank:
+   **stop and offer `/checkin <date>`** — do not auto-run checkin. The daily log is the spine;
+   lake-only → mostly-`inferred` day (failure mode this skill exists to avoid). He may
+   override and proceed thin; that is his call.
 1. Daily log **N and N+1** (evenings / prior-night sleep often land in N+1)  
 2. Lake N (+ edges N−1/N+1): `python3 <reader> <date>` — do not reimplement  
 3. Keyword sweep for later mentions of N  

@@ -9,10 +9,7 @@
 *.py[cod]
 *.egg-info/
 
-# Nested third-party skill — separate repo (poiurewq/spec.git)
-/spec/
-
-# Local Claude noise under this tree
+# Local Claude noise if present in tree
 .claude/
 
 # Superseded material — lineage in git history only

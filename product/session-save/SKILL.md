@@ -10,7 +10,7 @@ description: Save current conversation as a three-layer SPP (01_promotion / 02_t
 **Alias:** `/spp`  
 **Promotion rules:** `PROMOTION.md` (required for step 6)  
 **Feedback:** `FEEDBACK.md` · convention in `~/.claude/skills/_shared/skill-feedback-convention.md`  
-**Archive of v0.1:** `~/.claude/skills/_archived/session-save_v0.1_2026-07-22/`
+**Archive of v0.1:** git history under `_archived/session-save_v0.1_2026-07-22/` (removed from tree)
 
 ---
 
@@ -38,7 +38,8 @@ Promotion is **not** a diary. If you narrate the whole session there, you are wr
 | SPP lake | `/Users/levi/Library/Mobile Documents/com~apple~CloudDocs/00_COLLEVITY/03_TACTIC/claude_session-persistent-packages/` |
 | Registry | `/Users/levi/Library/Mobile Documents/com~apple~CloudDocs/00_COLLEVITY/03_TACTIC/thread-registry.md` |
 | Protocol | `…/01_STRATEGY/protocols/session-save-protocol.md` |
-| Skill dir | `~/.claude/skills/session-save/` |
+| Skill dir (load) | `~/.claude/skills/session-save/` (symlink) |
+| Skill dir (source) | `~/dev/levi-skills/product/session-save/` |
 
 Package folder: `YYYY-MM-DD-HHMM_<session-slug>__<cwd-slug>/`
 

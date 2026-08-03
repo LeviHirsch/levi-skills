@@ -46,22 +46,18 @@ already queryable, already on the phone.
 | `task` | Tasks | forward — no time claimed yet |
 | `log` | Calendar (`ACTUAL`) | backward — what happened |
 
-They are separate because Levi names the surface when he speaks (`schedule` / `task` /
-`log`); a router guessing between them would solve a problem that does not exist. Domains
-are tags + color on events — **not** separate calendars. What they share lives in `_shared/`:
-
+Separate skills because Levi names the surface (`schedule` / `task` / `log`) — no router.
+Domains = tags + color, not separate calendars. Shared substrate:
 
 | File | Holds |
 |------|-------|
-| `workspace-tags.md` | the `cv_*` tag schema; what is visible to Levi and what is not |
-| `domains.json` | provisional domain → color map (flexible; not a closed schema) |
-| `google-workspace-mechanics.md` | API behaviour verified live, not read from docs |
-| `skill-feedback-convention.md` | how per-skill `FEEDBACK.md` works |
+| `workspace-tags.md` | `cv_*` schema; visibility |
+| `domains.json` | provisional domain → color map |
+| `google-workspace-mechanics.md` | verified API / access / calendar pick |
+| `skill-feedback-convention.md` | per-skill `FEEDBACK.md` |
 
-Chain: `checkin` builds the daily log → `log` transcribes it onto `ACTUAL` → that history
-is what planning (`schedule` / `task`) can eventually be measured against.
-
-Each of the three supports `/<skill> feedback …` into its own `FEEDBACK.md`.
+Chain: `checkin` → daily log → `/log` → ACTUAL (history for later plan comparison).  
+Each skill: `/<skill> feedback …` → its `FEEDBACK.md`.
 
 ## Everyday
 

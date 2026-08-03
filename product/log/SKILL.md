@@ -3,125 +3,100 @@ name: log
 description: Reconstruct a past day onto the ACTUAL calendar from the daily-tracking log plus the Collevity lake — timed blocks placed directly, untimed activity bounded from evidence, every block marked logged or inferred. The "actual" half of intent-vs-actual. Use on /log, "transcribe my day", "put yesterday on the calendar", "reconstruct <date>". For future events use /schedule.
 ---
 
-# /log (v0.3)
+# /log (v0.4)
 
-Reconstruct a day that already happened onto **`ACTUAL - transcribed from log`**.
+Past day → blocks on **`ACTUAL - transcribed from log`**. Not `/schedule`: backward, batch,
+evidence-bound. Own calendar so primary stays clean.
 
-This is not `/schedule`. It is backward, batch, evidence-bound. Separate calendar on purpose
-so the primary plan calendar does not get polluted. `/checkin` builds the daily log; `/log`
-reads that log (plus the lake) and writes ACTUAL.
+`/checkin` writes the daily log · `/log` reads log + lake · writes ACTUAL.
 
 ```
 /log 2026-08-01
-/log yesterday
-/log feedback …
+/log yesterday                  ← default if no date
+/log feedback …                 → FEEDBACK.md only
 ```
 
-Default date if omitted: **yesterday**.
-
-## Read first
+## Refs
 
 | | |
 | --- | --- |
 | Tags | `_shared/workspace-tags.md` |
 | Color map (provisional) | `_shared/domains.json` |
-| API + lake signals | `_shared/google-workspace-mechanics.md` |
-| Feedback Open | `FEEDBACK.md` |
-| Target calendar | `ACTUAL - transcribed from log` only |
+| API + lake | `_shared/google-workspace-mechanics.md` |
+| Feedback Open | `FEEDBACK.md` (skim on invoke) |
+| Calendar | `ACTUAL - transcribed from log` **only** |
 | Daily logs | `…/03_TACTIC/daily-tracking/<YYYY-MM-DD>.md` |
 | Lake reader | `product/checkin/read_lake_day.py` |
 | Hub OAuth | `levihirsch0@gmail.com` · `~/.config/collevity/gcal/` |
 
-Skim FEEDBACK Open. Writes need the **raw Calendar API** for tags. Scripts stay live until a
-shape repeats.
+Tags → raw Calendar API. Scripts live until a shape repeats.
 
-## Two steps
+## Steps
 
 ```
-gather(date)         → evidence
-transcribe(evidence) → blocks on ACTUAL
+gather(date)  →  evidence  →  transcribe  →  ACTUAL
 ```
 
-Keep the seam. Better retrieval later should replace gather, not rewrite transcribe.
+Keep gather and transcribe separate (better retrieval later replaces gather only).
 
 ### gather
 
-1. Daily log for **N and N+1** — catch-up is often written the next afternoon; evenings and
-   prior-night sleep land in N+1. This already bit on the first real day.
-2. Lake for N (and edges of N−1 / N+1) via the reader — do not reimplement:
-   `python3 <reader> <date>`
-3. Keyword sweep for later mentions of N (retrospectives have no matching timestamp).
+1. Daily log **N and N+1** (evenings / prior-night sleep often land in N+1)  
+2. Lake N (+ edges N−1/N+1): `python3 <reader> <date>` — do not reimplement  
+3. Keyword sweep for later mentions of N  
 
-**Read full text. Never decide from a truncated preview.** First real run: most "missing"
-data was still in the uncut text; full reads cut the inference rate hard.
+**Full text only** — never decide from a truncated preview.
 
-| source | use |
+| source | for |
 | --- | --- |
-| daily log | spine of what happened (the actual) |
-| `dropper-excel` | **what** he was thinking / deciding — not a full ledger of the day |
-| `claude-hook` / `grok-hook` | **when** he was in sessions (bounds work blocks) |
+| daily log | spine of what happened |
+| `dropper-excel` | **what** he was thinking (not a full day ledger) |
+| hooks | **when** he was in sessions (bounds work) |
 
 ### transcribe
 
-1. Place **clocked** items first (log times, explicit times in drops).
-2. Bound gaps from hook clusters + drop timestamps.
-3. Every block: `cv_confidence=logged` or `inferred`. No unmarked guesses on ACTUAL.
-4. Containers (library stretch, guests over) get their own block; children get `cv_parent`
-   after the parent event id exists.
-5. Domain = free text that fits; color from provisional map or `_fallback`. Do not shoehorn.
-6. Titles human and accurate to who was there — not a forced naming scheme.
-7. Show him the picture; correct what reading cannot catch. First pass is not sacred.
+1. Clocked times first  
+2. Bound gaps (hooks + drop timestamps)  
+3. Every block: `cv_confidence=logged` \| `inferred`  
+4. Containers own a block; children get `cv_parent` after parent id exists  
+5. Domain free text; color from map or `_fallback`  
+6. Human titles (accurate who/what — no tag prefixes)  
+7. Show him; first pass is not final  
 
-### Write (ACTUAL only, raw API)
+### write (raw API)
 
 | | |
 | --- | --- |
 | calendar | `ACTUAL - transcribed from log` |
-| title | human, no tag prefixes |
-| `cv_schema` | `v1` |
-| `cv_source` | `log-transcription` |
-| `cv_domain` | free text |
-| `cv_confidence` | `logged` \| `inferred` |
-| `cv_parent` | when nested |
-| `colorId` | map or `_fallback` |
+| title | human |
+| `cv_schema` / `cv_source` | `v1` / `log-transcription` |
+| `cv_domain` / `cv_confidence` | free text / `logged`\|`inferred` |
+| `cv_parent` / `colorId` | if nested / map or `_fallback` |
 
-Do not invent a free/busy scheme for ACTUAL unless he asks — it did not show up usefully in
-the UI when tried.
-
-### Re-runs
-
-If that day already has ACTUAL events: say so, ask replace / amend / abort. No silent duplicate.
+No free/busy policy unless he asks. **Re-run:** if ACTUAL already has that day → ask
+replace / amend / abort (no silent duplicate).
 
 ## Overlap
 
-Nested and concurrent blocks are usually right (work while guests are over, call on a bike).
-Do not warn, do not collapse, do not "fix collisions."
+Nested/concurrent is usually right. Do not warn or collapse.
 
-## Modes
+## Don't
 
 | | |
 | --- | --- |
-| `/log [date]` | gather → transcribe → ACTUAL |
-| `/log feedback …` | `FEEDBACK.md` only |
-
-## Do not
-
-| Don't | Do |
-| --- | --- |
-| Infer from truncated text | Full entry first |
-| Read only day N | N and N+1 |
-| Treat hooks as narrative | Presence signal only |
-| Leave confidence blank | logged or inferred every time |
-| Call it done without him | He catches what you miss |
-| Write to primary / plan calendars | ACTUAL only |
-| Silently overwrite a transcribed day | Ask first |
-| Put tags in titles | Titles stay human |
+| Truncated text | Full entry first |
+| Day N only | N and N+1 |
+| Hooks as story | Presence only |
+| Unmarked confidence | logged or inferred |
+| Done without him | He catches misses |
+| Write plan calendars | ACTUAL only |
+| Silent re-transcribe | Ask first |
+| Tags in titles | Human only |
 
 ## Limits
 
-- gather is a floor until better retrieval exists.
-- Log granularity caps what you can honestly place; unclocked real work gets bounded, not faked precise.
+gather is a floor; log granularity caps honesty. Unclocked work is bounded, not fake-precise.
 
-## Done when
+## Done
 
-Day on ACTUAL, tagged/colored/confidence-marked, containers linked, he has corrected what was wrong.
+Day on ACTUAL · tagged/colored/confidence-marked · containers linked · he corrected misses.

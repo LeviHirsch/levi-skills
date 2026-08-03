@@ -1,149 +1,116 @@
 # Google Workspace mechanics — verified
 
-Every line here was tested live against Levi's account on 2026-08-02/03, not read from docs.
-Do not re-derive. Do not trust the Google UI to reflect any of it.
-
----
+Tested live on Levi's account 2026-08-02/03. Not from docs. Do not re-derive. Do not trust
+the Google UI to reflect this.
 
 ## Access
 
-`workspace-mcp` (`uvx workspace-mcp --tools calendar gmail tasks drive sheets`), user-scope
-stdio MCP. Creds `~/.config/collevity/gcal/`. Hub account `levihirsch0@gmail.com`.
+- **MCP:** `workspace-mcp` (calendar gmail tasks drive sheets), user-scope. Hub:
+  `levihirsch0@gmail.com`. Creds: `~/.config/collevity/gcal/`.
+- **Tags:** MCP **cannot** write `extendedProperties`. Use raw Calendar API + stored token.
+  MCP is fine for reads, simple untagged CRUD, and Tasks.
+- **Raw API:** load `credentials/<email>.json` → use token → on `401` refresh via
+  `refresh_token` / `token_uri`. Safe while OAuth consent stays "In production" (Testing
+  expires refresh in 7 days).
 
-**`workspace-mcp` cannot write `extendedProperties`** — `manage_event` has no such field.
-Tag writes require the raw Calendar API with the stored OAuth token. The MCP is fine for
-plain reads and simple event CRUD (and for Tasks, which have no tags).
-
-Raw API pattern: load `~/.config/collevity/gcal/credentials/<email>.json`, try the stored
-`token`, on `401` refresh via `refresh_token` against `token_uri`. Refresh token is durable
-as long as the OAuth consent screen stays "In production" (Testing expires them in 7 days).
-
-## Paths the skills need
+## Paths
 
 | what | where |
 | --- | --- |
-| Daily tracking logs | `…/00_COLLEVITY/03_TACTIC/daily-tracking/<YYYY-MM-DD>.md` |
-| Lake | `…/00_COLLEVITY/03_TACTIC/_DATA/collevity_lake.jsonl` |
-| Lake day reader | `product/checkin/read_lake_day.py` (symlink: `~/.claude/skills/checkin/`) |
-| ACTUAL calendar (name) | `ACTUAL - transcribed from log` |
+| Daily logs | `…/03_TACTIC/daily-tracking/<YYYY-MM-DD>.md` |
+| Lake | `…/03_TACTIC/_DATA/collevity_lake.jsonl` |
+| Lake reader | `product/checkin/read_lake_day.py` |
+| ACTUAL calendar | `ACTUAL - transcribed from log` |
 | OAuth | `~/.config/collevity/gcal/` |
 
-Resolve calendar and task-list **ids by title** at runtime; do not hardcode ids in skills.
+Resolve calendar and task-list **ids by title** at runtime. Do not hardcode ids.
 
-## Hub account vs calendar
+## Hub vs calendar
 
-One OAuth hub: **`levihirsch0@gmail.com`**. Skills do **not** switch Google accounts per event.
-They pick a **calendar** (or Tasks list) that this hub can write to. Writer calendars
-(`levi@nascentech.com`, `Haptic Info/Admin`) are still written **as** the hub user with
-shared access — not a second login.
+One OAuth hub: **`levihirsch0@gmail.com`**. Skills pick a **calendar or list** that hub can
+write to — they do not switch Google accounts. Writer calendars (`levi@nascentech.com`,
+`Haptic Info/Admin`) are still written *as* the hub user.
 
-### Which calendar? (`/schedule`)
+### `/schedule` — which calendar
 
-Signal order used in the live week (stop at first solid hit):
+Stop at first solid hit:
 
-1. Levi names the calendar.
-2. Content heuristic:
+1. He names it  
+2. Content:
 
    | calendar | signal |
    | --- | --- |
-   | primary (`levihirsch0`) | personal / family / friends / faith / unmarked default |
-   | `levi@nascentech.com` | NascenTech work (named external 1:1s, company-facing; not the old `nascen.tech` mailbox) |
-   | `Haptic Info/Admin` | whole Haptic team should see it (edits can mail Groups) |
+   | primary (`levihirsch0`) | personal / family / friends / faith / default |
+   | `levi@nascentech.com` | NascenTech work (not old `nascen.tech`) |
+   | `Haptic Info/Admin` | whole team should see it (Groups mail fan-out) |
 
-3. Still unclear → sample a few recent events on candidates and match shape, or ask once.
+3. Unclear → sample recent events on candidates, or ask once  
 
-**Not calendars-for-domains.** Domain lives in `cv_domain` + color. Splitting life across
-many domain calendars was rejected (gets messy).
+Not domain-as-calendar (`cv_domain` + color instead).  
+**No new work on:** `ACTUAL…` (`/log` only), `levi@nascen.tech` (decommission).
 
-**Do not write new work to:** `ACTUAL - transcribed from log` (`/log` only),
-`levi@nascen.tech` (decommission path).
+### Access map
 
-## Calendar access map
-
-| role | calendar |
+| role | calendars |
 | --- | --- |
-| owner | `levihirsch0` (primary) · `truthtrek` · `leviahirsch1` · `dorkingham` · `levi@nascen.tech`* · `ACTUAL - transcribed from log` |
-| writer | `levi@nascentech.com` · `Haptic Info/Admin` (group calendar) |
-| freeBusyReader | `lh924@georgetown.edu` — GU domain policy; needs its own OAuth to fix |
+| owner | primary, truthtrek, leviahirsch1, dorkingham, nascen.tech*, ACTUAL |
+| writer | `levi@nascentech.com`, `Haptic Info/Admin` |
+| freeBusyReader | `lh924@georgetown.edu` (GU policy) |
 | reader | US Holidays |
 
-\* `nascen.tech` is slated for decommission; its events die with the account. Do not target it
-for new work.
-
-`ACTUAL - transcribed from log` — **`/log` only.** Keeps planning calendars clean.
+\* nascen.tech decommission path — do not add new events.
 
 ## extendedProperties
 
-- `privateExtendedProperty=key=value` filters **server-side**; multi-key is AND.
-- **One PATCH on a recurring parent tags all instances.** 730 instances, 1.44s.
-- Expanded instances (`singleEvents=true`) inherit tags *and* match the filter.
-- Per-instance override works and does not affect the parent — inheritance with exceptions.
-- Keys longer than 44 chars are **silently dropped**, not rejected.
-- Not present on Tasks at all (see `workspace-tags.md`).
-- Almost certainly do not survive `.ics` export — unverified, matters only on migration.
+- Filter: `privateExtendedProperty=key=value` (server-side; multi-key AND)  
+- One PATCH on a recurring parent tags all instances (~730 / 1.4s)  
+- Expanded instances inherit tags and match filters; per-instance override is independent  
+- Keys >44 chars **silently drop**  
+- Not on Tasks; likely lost on `.ics` export (unverified)
 
-## Event fields worth knowing
+## Event fields
 
-| field | values | note |
-| --- | --- | --- |
-| `status` | `confirmed` `tentative` `cancelled` | settable and persistent, but **UI-invisible** for events you own without guests |
-| `transparency` | `opaque` `transparent` | busy/free; **not visibly distinct** in practice |
-| `colorId` | `1`–`11` | only 11 event colors. Calendar colors are 24 + custom, a different palette |
-| `visibility` | `default` `public` `private` `confidential` | controls what *others* see on a shared calendar |
-| `recurrence` | RFC5545 RRULE | one rule per series; different times per weekday needs separate series |
+| field | note |
+| --- | --- |
+| `status` | confirmed/tentative/cancelled — **UI-invisible** for owned events without guests |
+| `transparency` | opaque/transparent — **not visibly distinct** in practice |
+| `colorId` | `1`–`11` only (event palette ≠ calendar palette) |
+| `visibility` | what *others* see on a shared calendar |
+| `recurrence` | one RRULE per series; different weekday times → separate series |
 
 ## Recurrence
 
-- A series with no `UNTIL` runs to ~2040. Assume unbounded unless capped.
-- To end a series while keeping its history: **PATCH the rule with `UNTIL`**, do not delete
-  the parent — deleting the parent destroys past instances too.
-- To change day-of-week or time for future only: cap the old series with `UNTIL`, create a
-  new one. New series = new event id; per-instance tweaks do not carry over.
-- Deleting a parent cancels every instance including the past.
+- No `UNTIL` → runs to ~2040  
+- Keep past, end future → **PATCH `UNTIL`** (parent delete destroys past too)  
+- Change day/time for future only → cap old series + create new (new id; instance tweaks do not carry)
 
-## Deleting and notifications
+## Delete / mail
 
-`sendUpdates=none` suppresses all mail. **Default is `all`** — deleting or moving an event
-with attendees mails every one of them. Attendee entries that look like people are often
-Google **Groups**: one address fans out to a whole team.
+`sendUpdates=none` suppresses mail. **Default is `all`.** Attendees are often **Groups**
+(one address → whole team).
 
-## syncToken (reconciler / later; not required for v0.x skill runs)
+## syncToken (later reconciler; not needed for v0.x runs)
 
-Full sync of the primary calendar: 87 events, 0.4s. Delta with no changes returns 0 items.
-Delta after one edit returns exactly that item in 0.25s, carrying title and tags together.
-Expires with `410 GONE` — must fall back to a full resync or the loop silently dies.
-Your own writes come back in the next delta; idempotence (derive, compare, no-op if equal)
-is the only defense against a write loop.
+Full primary sync ~87 events / 0.4s. Delta returns only changes; `410 GONE` → full resync.
+Own writes reappear in the next delta — idempotence is the write-loop defense.
 
 ## Tasks
 
-Full resource: `title · notes · due · status · parent · position · links`.
+`title · notes · due · status · parent · position · links` — no tags/color. Unknown fields
+drop. Due → appears on Calendar UI; undated → side panel. List delete wipes all tasks.
 
-- No `extendedProperties`, no color, on task or task list. Unknown fields silently dropped.
-- `position` is lexicographic sibling ordering under the same parent — not metadata.
-- `parent` is real one-level hierarchy.
-- A task **with** a due date appears in the Calendar UI; undated ones stay in the side panel,
-  which is visible on the same page.
-- **Deleting a task list deletes every task in it.** Read first.
-
-Lists in active use (resolve id by title):
-
-| list title | role |
+| list | role |
 | --- | --- |
-| `Scheduling queue` | wants a time, does not have one |
-| `My Tasks` | Google default / loose residue |
+| `Scheduling queue` | wants a time |
+| `My Tasks` | loose to-dos |
 
-## The lake
+## Lake
 
-`03_TACTIC/_DATA/collevity_lake.jsonl`. Record: `text · created_at · source · author · id ·
-context?`. **No taxonomy** — no domain, category, or tags.
-
-Sources split into two different signals:
+`collevity_lake.jsonl`: `text · created_at · source · author · id · context?` — no taxonomy.
 
 | source | signal |
 | --- | --- |
-| `dropper-excel` | **content** — what Levi was thinking about |
-| `claude-hook` / `grok-hook` | **presence** — when he was working, and on what |
+| `dropper-excel` | content (what he was thinking) |
+| `claude-hook` / `grok-hook` | presence (when / on what) |
 
-Read via `collevity.lake.cli` / `collevity-read-day` (launcher: `product/checkin/read_lake_day.py`).
-Do not reimplement lake reading.
+Read via `collevity.lake.cli` / `read_lake_day.py`. Do not reimplement.

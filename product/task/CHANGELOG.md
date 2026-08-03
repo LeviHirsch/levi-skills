@@ -1,26 +1,21 @@
 # task changelog
 
+## v0.4 — 2026-08-03
+
+Pass-3: simplicity / clarity / readability. Same rules; denser layout; uniform shape.
+
 ## v0.3 — 2026-08-03
 
-Pass-2 (user-intent fidelity):
-
-- Explicit: "needs to happen" / "book Dan" stays a task — do not re-route to calendar
-- Hub account + list-by-title; no unasked calendar proposals from task capture
-- Leaner; due date = commitment he gave
+Pass-2: "book Dan" stays a task; hub + list-by-title; no unasked calendar proposals.
 
 ## v0.2.1 — 2026-08-03
 
-Pass-1 follow-up: shared domain flexibility (no skill-side domain lock). Version aligned.
+Domain flexibility alignment.
 
 ## v0.2 — 2026-08-03
 
-Pass-1 refine (gaps / operability):
-
-- Paths, hub/creds, FEEDBACK skim, `/task feedback`
-- Resolve list ids by title; promotion sets `cv_source=task` then closes the task
-- Due-date calendar side-effect called out; no silent metadata on Tasks
+Pass-1: paths, FEEDBACK, promotion `cv_source=task`, due-date side-effect.
 
 ## v0.1 — 2026-08-03
 
-Scaffolded from the Google-integration session of 2026-08-02/03. Process only; scripts are
-written live until a shape repeats often enough to earn a file.
+Scaffold from Google-integration session. Process only; scripts live until a shape repeats.

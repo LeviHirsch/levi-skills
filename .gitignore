@@ -1,0 +1,16 @@
+# OS / editor
+.DS_Store
+**/.DS_Store
+*.swp
+*~
+
+# Python
+**/__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Nested third-party skill — separate repo (poiurewq/spec.git)
+/spec/
+
+# Local Claude noise under this tree
+.claude/

@@ -2,41 +2,38 @@
 
 Personal + product Claude skills for Collevity.
 
+Same **iCloud-safe external-gitdir** pattern as `collevity-tooling`.
+
 | Role | Path |
 |------|------|
-| **Source (real files + `.git`)** | `~/dev/levi-skills/` |
-| **Work door (Collevity)** | `00_COLLEVITY/02_CONTENT/levi-skills` → symlink to source |
-| **Claude load path** | `~/.claude/skills/<name>` → symlinks into `product/` / `personal/` |
+| **Working tree (iCloud)** | `00_COLLEVITY/02_CONTENT/levi-skills/` |
+| **Git dir (local)** | `~/dev/collevity/levi-skills.git` |
+| **Claude load path** | `~/.claude/skills/<name>` → symlink into `product/` / `personal/` |
 
-Same tree three ways: edit/git from Collevity or `~/dev`; Claude loads via `~/.claude/skills`.
+`.git` in the worktree is a **file** (`gitdir: …`), not a directory. Never delete the local gitdir; never turn `.git` back into a folder.
 
 ## Layout
 
 | Path | Role |
 |------|------|
-| `product/` | Collevity-facing skills (orchestrate, session-save, checkin, …) |
+| `product/` | Collevity-facing (orchestrate, session-save, checkin, …) |
 | `personal/` | Levi-only (e.g. build-learning-project) |
 | `_shared/` | Cross-skill conventions |
 
-## Wiring
+## Load path wiring
 
 ```text
-00_COLLEVITY/02_CONTENT/levi-skills          -> ~/dev/levi-skills
-
-~/.claude/skills/orchestrate                 -> …/product/orchestrate
-~/.claude/skills/session-save                -> …/product/session-save
-~/.claude/skills/checkin                     -> …/product/checkin
-~/.claude/skills/build-learning-project      -> …/personal/build-learning-project
-~/.claude/skills/_shared                     -> …/_shared
-~/.claude/skills/spec/                       third-party clone (not this repo)
+~/.claude/skills/orchestrate              -> …/levi-skills/product/orchestrate
+~/.claude/skills/session-save             -> …/levi-skills/product/session-save
+~/.claude/skills/checkin                  -> …/levi-skills/product/checkin
+~/.claude/skills/build-learning-project   -> …/levi-skills/personal/build-learning-project
+~/.claude/skills/_shared                  -> …/levi-skills/_shared
+~/.claude/skills/spec/                    third-party clone (not this repo)
 ```
 
 ## Everyday
 
 ```sh
-# either door — same repo
-cd ~/dev/levi-skills
-# or:
 cd "$HOME/Library/Mobile Documents/com~apple~CloudDocs/00_COLLEVITY/02_CONTENT/levi-skills"
 
 git status
@@ -49,8 +46,8 @@ git push
 
 | Path | Why |
 |------|-----|
-| `spec/` | Lives only under `~/.claude/skills/spec` (`poiurewq/spec.git`) |
-| `_archived/` | Lineage in git history only (removed from tree) |
+| `spec/` | Only under `~/.claude/skills/spec` |
+| `_archived/` | Lineage in git history only |
 | `.DS_Store`, `.claude/` | Noise |
 
 Private remote. Do not make public without scrubbing paths/FEEDBACK.

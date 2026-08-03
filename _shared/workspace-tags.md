@@ -43,8 +43,11 @@ The point of `cv_domain` is queryability later — not to freeze vocabulary earl
 | `log-transcription` | created by `/log` on the ACTUAL calendar |
 | `manual` | written by hand or ad-hoc script, not one of the three skills |
 
-**Never put tags in titles.** Titles stay human. Color + calendar are the human-visible
-handles; tags are for query and later machine use.
+**Never put tags in titles.** Levi's rule. Titles stay human — no `[domain]` prefixes, no
+skill-invented naming scheme until he asks for one. Color + which calendar are the
+human-visible handles; tags are for query and later machine use.
+
+Domains are **not** separate calendars. One (or few) calendars + `cv_domain` + color.
 
 ## Querying
 

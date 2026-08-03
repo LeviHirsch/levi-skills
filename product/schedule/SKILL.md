@@ -3,11 +3,13 @@ name: schedule
 description: Put something on Levi's Google Calendar from a loose natural-language description — pick the calendar, set the time, tag it by domain, apply color. Use on /schedule, "put X on the calendar", "schedule X", "add X to my calendar", "block time for X", or when Levi describes an event that should exist. For things that need doing but claim no time, use /task instead. For reconstructing a past day, use /log.
 ---
 
-# /schedule (v0.2.1)
+# /schedule (v0.3)
 
-Take one loose sentence and turn it into a correctly-placed, correctly-tagged calendar event.
+One loose sentence → one (or a clearly named series of) calendar events.
 
-Levi names the surface. If he said "calendar," do not second-guess it into a task.
+**He names the surface.** If he said calendar / schedule / put it on the calendar, do that.
+Do not re-route into a task. Do not invent extra blocks. Only place what he asked for or what
+already has a real time attached.
 
 ```
 /schedule lunch with cody tuesday noon at st elmos
@@ -20,121 +22,120 @@ Levi names the surface. If he said "calendar," do not second-guess it into a tas
 
 | | |
 | --- | --- |
-| Tag schema | `_shared/workspace-tags.md` |
-| Domain → color | `_shared/domains.json` |
-| API facts | `_shared/google-workspace-mechanics.md` |
-| Feedback (Open) | `FEEDBACK.md` in this folder |
-| Hub account | `levihirsch0@gmail.com` |
-| Creds | `~/.config/collevity/gcal/` |
+| Tags | `_shared/workspace-tags.md` |
+| Color map (provisional) | `_shared/domains.json` |
+| API + access map | `_shared/google-workspace-mechanics.md` |
+| Feedback Open | `FEEDBACK.md` |
+| Hub OAuth | `levihirsch0@gmail.com` · `~/.config/collevity/gcal/` |
 
-Skim **FEEDBACK.md → Open** on invoke; honor `prefer` / `dislike`.
+Skim FEEDBACK Open. Honor prefer / dislike.
 
-`workspace-mcp` **cannot write tags.** Use the raw Calendar API with the stored token
-(see mechanics). MCP is fine for plain reads and simple untagged CRUD.
-
-Scripts are written live for now. Promote a script to a file only when the same shape
-repeats often enough to earn it. The skill is the milestone; durable scripts are not.
+Tags need the **raw Calendar API** (`workspace-mcp` cannot write `extendedProperties`). Scripts
+stay live until a shape repeats; the skill is the milestone.
 
 ## Process
 
 ### 1. Parse
 
-Pull out: title, date, start, duration / end, location, recurrence, attendees, calendar hint,
-timezone if any, domain if obvious.
+Title, date, start, end/duration, location, recurrence, attendees, calendar hint, timezone,
+domain if obvious.
 
-Resolve dates and weekdays **computationally**, never mentally. If the input names both a
-weekday and a date, verify they agree; if they disagree, stop and ask. Convert timezones with
-`zoneinfo` (default calendar context: America/New_York unless the input says otherwise) and
-report which calendar day each side lands on when zones differ.
+- Resolve dates/weekdays **with code**, not in your head. Weekday + date both given → verify
+  they match; if not, stop and ask.
+- Timezones via `zoneinfo`. Default context: America/New_York unless he said otherwise. When
+  sides differ (e.g. NZ), report which local calendar day each side lands on.
+- **Title:** his words, human. No tag prefixes, no naming scheme of your own. He has not
+  locked a title convention — do not invent one.
 
-### 2. Route to a calendar
+### 2. Pick the calendar
 
-Ask only if genuinely unclear. The signal is usually in the content.
+You are choosing a **calendar under the hub account**, not switching Google accounts.
+OAuth is always `levihirsch0@gmail.com`. Resolve the calendar id by its summary/title at runtime.
 
-| goes to | when |
-| --- | --- |
-| `levihirsch0` (primary) | personal, relational, faith, family, anything unmarked |
-| `levi@nascentech.com` | NascenTech-facing meetings |
-| `Haptic Info/Admin` | anything the whole Haptic team should see — **writer, and it mails everyone** |
-| a specific other | only when Levi names it |
+**Signal order — stop at the first solid hit:**
 
-**Never write intent/future events to `ACTUAL - transcribed from log`.** That calendar is
-`/log` only.
+1. **He names it** ("on nascentech", "Haptic", "primary", a calendar title).
+2. **Content of the event:**
 
-### 3. Fill the gaps
+   | calendar | when |
+   | --- | --- |
+   | primary (`levihirsch0`) | personal, family, friends, faith, home, unmarked default |
+   | `levi@nascentech.com` | NascenTech work (external 1:1s, Sabrina-style blocks, company-facing) |
+   | `Haptic Info/Admin` | whole Haptic team should see it — **writer; mail can fan out via Groups** |
 
-Ask about **times and people**. Guess everything else and say you guessed.
+3. **Still unclear** — glance at a few recent events on the candidate calendars and match
+   shape (how the first real week was disambiguated), **or** ask once. Do not interview.
 
-- No end time → pick a sane duration (default ~1h unless the kind of event implies otherwise),
-  state it, move on. Levi will correct it or won't.
-- Missing location or description → leave empty. Cheap to add later.
-- Domain → observe from content; do not interrogate. New domains are legal.
-- Attendees → **never add without an explicit yes.** Adding them mails them immediately;
-  `sendUpdates` defaults to `all`. Confirm the recipient list out loud before writing.
-  Attendee addresses that look like people are often Google **Groups** (fan-out).
+**Off limits for this skill**
 
-### 4. Write
+- `ACTUAL - transcribed from log` → `/log` only
+- `levi@nascen.tech` → decommission path; do not add new work there
+- **Do not use a separate calendar per domain.** Domains are tags + color, not calendars.
 
-Set on create (raw API when tags are involved):
+State which calendar you picked in the report.
+
+### 3. Fill gaps
+
+Ask about **times and people**. Guess the rest; say what you guessed. Keep the back-and-forth
+short.
+
+- No end → sane duration (often ~1h; keep longer when the event kind or he implies it), state it.
+- Location / description missing → leave empty.
+- Domain → observe; do not interrogate. Free text; map is provisional (see tags doc).
+- Attendees → **only with an explicit yes.** `sendUpdates` defaults to `all`. Confirm the list
+  out loud before write. Addresses that look like people are often **Groups**.
+
+### 4. Write (raw API when tagging)
 
 | field | value |
 | --- | --- |
-| `extendedProperties.private.cv_schema` | `v1` |
-| `extendedProperties.private.cv_source` | `schedule` |
-| `extendedProperties.private.cv_domain` | observed free text |
-| `extendedProperties.private.cv_sub` | if obvious; optional |
-| `colorId` | from `domains.json` for that domain; else `_fallback` — do not error, do not ask |
-| `sendUpdates` | `none` unless attendees were explicitly approved |
+| `cv_schema` | `v1` |
+| `cv_source` | `schedule` |
+| `cv_domain` | free text that fits |
+| `cv_sub` | optional |
+| `colorId` | `domains.json` if mapped, else `_fallback` |
+| `sendUpdates` | `none` unless attendees approved |
 
-Optional machine fields (set when the case fits; **not visible in the Google UI** for events
-you own — do not rely on them as a signal Levi will see):
+Optional and **not UI-visible** for events you own — set only when he asked or it clearly fits;
+do not treat as a signal he will see:
 
-- `status: tentative` when he said tentative / soft / not locked
-- `transparency: transparent` when he wants a soft block that should not look busy
+- `status: tentative` if he said tentative / soft / not locked
+- `transparency: transparent` if he wants a soft free block
 
-Domains are **observed and adjustable**, not a closed schema. `domains.json` is only today's
-color map. Never refuse or shoehorn a domain because it is missing or awkward in that file —
-write the free-text `cv_domain` that fits; unmapped gets `_fallback` color. Open questions in
-the map (family vs relationships, rhythm, multi-value, etc.) stay open; do not pretend they
-are settled.
+Do not invent a free/busy policy on your own.
 
 ### 5. Report
 
-One screen: time, calendar, domain, color, and anything you guessed. Then stop.
+One short screen: when, which calendar, domain/color, guesses. Stop.
 
 ## Recurrence
 
-Read the recurrence section of the mechanics doc before touching a series. The three that bite:
+Mechanics doc first. Three traps:
 
-1. No `UNTIL` means it runs to ~2040. Ask for a horizon or say out loud that it is unbounded.
-2. Different times on different weekdays need **separate series** — one RRULE, one time.
-3. To end a series while keeping its past: PATCH `UNTIL`. Deleting the parent destroys history.
+1. No `UNTIL` → runs to ~2040. Cap or say it is unbounded.
+2. Different times on different weekdays → **separate series**.
+3. End series, keep history → PATCH `UNTIL`. Parent delete kills the past.
 
 ## Modes
 
-| Command | What |
+| | |
 | --- | --- |
-| `/schedule …` | create / update as asked |
-| `/schedule feedback …` | append taste to `FEEDBACK.md` only; do not schedule |
-
-Feedback convention: `_shared/skill-feedback-convention.md`.
+| `/schedule …` | do the event work |
+| `/schedule feedback …` | `FEEDBACK.md` only |
 
 ## Do not
 
 | Don't | Do |
 | --- | --- |
-| Flag overlaps as conflicts | Let them overlap. Overlap is often accurate |
-| Propose extra blocks he did not ask for | Create what was asked. Nothing else |
-| Put tags in the title | Title stays human; tags go in `extendedProperties` |
-| Re-ask something he already answered | Verify silently; speak only if the check disagrees |
-| Add attendees to be helpful | Never without explicit approval — it sends mail |
-| Refuse or shoehorn a domain into the map | Write free text; map is provisional |
-| Write to the ACTUAL calendar | That is `/log` |
-| Treat tentative / free-busy as UI-visible | They are not; surface state in the report if it matters |
+| Flag overlaps / "collisions" | Overlap is often fine (call in the car, soft blocks) |
+| Propose blocks he did not ask for | Only what he asked or what already has a real time |
+| Put tags in the title | Title stays human |
+| Re-ask what he already answered | Check silently; speak only if it disagrees |
+| Add attendees to be helpful | Explicit approval only |
+| Force a domain from the map | Free text; map is adjustable |
+| Write to ACTUAL or nascen.tech | Wrong calendars |
+| Route by domain-as-calendar | Tags + color, one (or few) calendars |
 
 ## Done when
 
-- The event exists on the right calendar with the right time
-- It carries `cv_schema`, `cv_source`, `cv_domain`, and a color
-- Every guess you made was stated
-- Nobody got emailed who was not approved
+Event on the right calendar at the right time; tags + color set; guesses stated; no surprise email.

@@ -1,5 +1,14 @@
 # schedule changelog
 
+## v0.3 — 2026-08-03
+
+Pass-2 (user-intent fidelity):
+
+- Calendar pick rewritten: hub account vs calendar; named → content → sample/ask once
+- Domains are not calendars; off-limits ACTUAL + nascen.tech
+- Stronger: he names the surface; no unasked blocks; no collision nags; no title scheme
+- Leaner voice; free/busy only if he asked
+
 ## v0.2.1 — 2026-08-03
 
 Pass-1 follow-up: domain schema explicitly flexible / not overcommitted.

@@ -3,12 +3,14 @@ name: task
 description: Capture something into Google Tasks that needs doing but claims no time yet — including tasks whose whole content is "schedule this". Also promotes a task to a calendar event once it gets a time. Use on /task, "add a task", "remind me to", "I need to", "put X in the queue", "I keep saying I'll meet up with X". For things that claim a time slot now, use /schedule instead.
 ---
 
-# /task (v0.2.1)
+# /task (v0.3)
 
-The surface for things that need to **not be forgotten** but do not claim a slot.
+Things that must **not be forgotten** but do **not** claim a calendar slot yet.
 
-Levi names the surface. "I need to book Dan" is a task even though the doing is scheduling.
-Do not helpfully turn it into an event.
+**He names the surface.** "I need to book Dan" is a **task** even though the work is later
+scheduling. Do not helpfully turn it into an event. The judgment call he does **not** want
+you to make: *"should this be on the calendar now?"* vs *"this needs to happen"* (which can
+include *schedule this*). If he said task / remind me / I need to / queue it — use Tasks.
 
 ```
 /task grab coffee with parker
@@ -21,82 +23,75 @@ Do not helpfully turn it into an event.
 
 | | |
 | --- | --- |
-| Tag schema + Tasks limits | `_shared/workspace-tags.md` |
-| API facts | `_shared/google-workspace-mechanics.md` |
-| Feedback (Open) | `FEEDBACK.md` in this folder |
-| Hub account | `levihirsch0@gmail.com` |
-| Creds | `~/.config/collevity/gcal/` (Tasks use the same OAuth) |
+| Tasks limits | `_shared/workspace-tags.md` |
+| API | `_shared/google-workspace-mechanics.md` |
+| Feedback Open | `FEEDBACK.md` |
+| Hub OAuth | `levihirsch0@gmail.com` · `~/.config/collevity/gcal/` |
 
-Skim **FEEDBACK.md → Open** on invoke; honor `prefer` / `dislike`.
+Skim FEEDBACK Open. Lists: resolve **id by title**. Create a list only if he asked for that name.
 
-Resolve list ids by **title** via the Tasks API (do not hardcode ids). Create a missing list
-only if Levi asked for it by name.
+Same hub account as calendar. You are picking a **task list**, not a different Google login.
 
-## The lists
+## Lists
 
 | list | holds |
 | --- | --- |
-| **Scheduling queue** | wants a time, does not have one — mostly people ("grab coffee with Parker", "book Dan") |
-| **My Tasks** | loose residue that is not a scheduling problem (deposit the check, pick up something) |
+| **Scheduling queue** | wants a time, does not have one — mostly people (Parker, book Dan, coffee with X) |
+| **My Tasks** | everything else that is still just a to-do (deposit the check, errands) |
 
-Anything big enough to be a standing arc belongs in the **thread registry** via
-`/orchestrate intake`, not here. This is for residue — too small for a thread, too real to drop.
+Standing multi-session arcs → `/orchestrate intake` (thread registry), not here. This surface
+is the small stuff that is real enough not to drop.
 
-## What Tasks cannot do
+## What Tasks can and cannot hold
 
-**No tags. No color. No `extendedProperties`.** Full resource:
-`title · notes · due · status · parent · position · links`.
+Resource: `title · notes · due · status · parent · position · links`.
 
-Unknown fields are accepted by the API and **silently discarded** — a write that looks like
-it worked did not. If domain matters, put it in `notes` as a visible line (or leave it off).
+**No tags, no color, no `extendedProperties`.** Unknown fields are accepted and **silently
+dropped**. Domain, if it matters, is a line in `notes` — or skip it.
 
-- `position` = sibling ordering under the same parent, not metadata
-- `parent` = real one-level hierarchy — use subtasks when something decomposes
-
-A task **with** a due date appears on the Calendar UI. Undated ones stay in the side panel.
-That is why inventing a due date is not free.
+- `parent` = one-level subtasks (real; Calendar does not have this)
+- `position` = sibling order only
+- A **due date** makes the task show on the Calendar UI. Undated stays in the side panel.
+  Inventing a due date is inventing a commitment. **Only if he gave one.**
 
 ## Process
 
-1. **Pick the list** from the two above. Ask only if genuinely ambiguous.
-2. **Due date only if Levi gave one.** Do not invent deadlines.
-3. **Notes** carry the *why* when there is one — context that the title cannot hold.
-4. **Write** via Tasks API (MCP is fine here; there are no tags to set).
-5. **Report** the list, the title, and whether it is dated. Then stop.
+1. Pick list (table above). Ask only if truly ambiguous.
+2. Due only if he said a date.
+3. Notes = why / context when he gave any (worth more later than a bare title).
+4. Write via Tasks API (MCP is fine).
+5. Report: list, title, dated or not. Stop.
 
-## Promotion (task → calendar)
+## Promotion → `/schedule`
 
-When a queued item gets a real time (Levi gives one, or asks to schedule it now):
+When **he** gives a time or says schedule it now:
 
-1. Hand off to `/schedule` with the title, notes, and time.
-2. On the calendar event, set `cv_source=task` (and the rest of the tag set per schedule).
-3. **Close the task** after the event exists — do not leave an open shadow of the event.
-4. Carry notes into the event description.
+1. `/schedule` with title, notes, time (calendar pick per schedule skill).
+2. Event `cv_source=task` (+ normal tag set).
+3. **Close the task** after the event exists — no open shadow.
+4. Notes → event description.
 
-Do not promote on your own initiative. He names when something moves from queue to calendar.
+Do not promote on your own.
 
 ## Modes
 
-| Command | What |
+| | |
 | --- | --- |
-| `/task …` | capture (or promote if a time is now given) |
-| `/task feedback …` | append taste to `FEEDBACK.md` only; do not create a task |
-
-Feedback convention: `_shared/skill-feedback-convention.md`.
+| `/task …` | capture (or promote if he just gave a time) |
+| `/task feedback …` | `FEEDBACK.md` only |
 
 ## Do not
 
 | Don't | Do |
 | --- | --- |
-| Invent due dates | Undated is the honest state for most of this |
-| Turn a task into an event to be helpful | He named the surface |
-| Write structured metadata onto a task | It is silently dropped. Use `notes` |
-| Promote small items into registry threads | Registry is for standing arcs |
-| Delete a list without reading it first | List deletion takes every task with it |
-| Leave a promoted task open | Close it once the event exists |
+| Invent due dates | Undated is fine |
+| Turn task → event to be helpful | He named Tasks |
+| Write fake metadata fields | They drop silently; use notes |
+| Push small items into the thread registry | Registry is for standing arcs |
+| Delete a list without reading it | Deletes every task in it |
+| Leave a promoted task open | Close after the event exists |
+| Propose calendar blocks from a task capture | That is `/schedule` when he asks |
 
 ## Done when
 
-- The item is on the right list, with notes if there was a reason
-- Nothing got a due date Levi did not give
-- He can find it on his phone
+Right list, honest due (or none), notes if he had a why, findable on his phone.

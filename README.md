@@ -46,8 +46,10 @@ already queryable, already on the phone.
 | `task` | Tasks | forward — no time claimed yet |
 | `log` | Calendar (`ACTUAL`) | backward — what happened |
 
-They are separate because Levi names the surface when he speaks; a router guessing between
-them would solve a problem that does not exist. What they share lives in `_shared/`:
+They are separate because Levi names the surface when he speaks (`schedule` / `task` /
+`log`); a router guessing between them would solve a problem that does not exist. Domains
+are tags + color on events — **not** separate calendars. What they share lives in `_shared/`:
+
 
 | File | Holds |
 |------|-------|

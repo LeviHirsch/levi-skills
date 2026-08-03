@@ -30,6 +30,34 @@ as long as the OAuth consent screen stays "In production" (Testing expires them 
 
 Resolve calendar and task-list **ids by title** at runtime; do not hardcode ids in skills.
 
+## Hub account vs calendar
+
+One OAuth hub: **`levihirsch0@gmail.com`**. Skills do **not** switch Google accounts per event.
+They pick a **calendar** (or Tasks list) that this hub can write to. Writer calendars
+(`levi@nascentech.com`, `Haptic Info/Admin`) are still written **as** the hub user with
+shared access — not a second login.
+
+### Which calendar? (`/schedule`)
+
+Signal order used in the live week (stop at first solid hit):
+
+1. Levi names the calendar.
+2. Content heuristic:
+
+   | calendar | signal |
+   | --- | --- |
+   | primary (`levihirsch0`) | personal / family / friends / faith / unmarked default |
+   | `levi@nascentech.com` | NascenTech work (named external 1:1s, company-facing; not the old `nascen.tech` mailbox) |
+   | `Haptic Info/Admin` | whole Haptic team should see it (edits can mail Groups) |
+
+3. Still unclear → sample a few recent events on candidates and match shape, or ask once.
+
+**Not calendars-for-domains.** Domain lives in `cv_domain` + color. Splitting life across
+many domain calendars was rejected (gets messy).
+
+**Do not write new work to:** `ACTUAL - transcribed from log` (`/log` only),
+`levi@nascen.tech` (decommission path).
+
 ## Calendar access map
 
 | role | calendar |

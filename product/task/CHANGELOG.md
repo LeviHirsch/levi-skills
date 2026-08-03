@@ -1,5 +1,13 @@
 # task changelog
 
+## v0.3 — 2026-08-03
+
+Pass-2 (user-intent fidelity):
+
+- Explicit: "needs to happen" / "book Dan" stays a task — do not re-route to calendar
+- Hub account + list-by-title; no unasked calendar proposals from task capture
+- Leaner; due date = commitment he gave
+
 ## v0.2.1 — 2026-08-03
 
 Pass-1 follow-up: shared domain flexibility (no skill-side domain lock). Version aligned.

@@ -1,8 +1,14 @@
 # levi-skills
 
-Personal + product Claude skills for Collevity.  
-**Source (git worktree):** `~/dev/levi-skills/`  
-**Claude load path:** `~/.claude/skills/` (symlinks into this repo)
+Personal + product Claude skills for Collevity.
+
+| Role | Path |
+|------|------|
+| **Source (real files + `.git`)** | `~/dev/levi-skills/` |
+| **Work door (Collevity)** | `00_COLLEVITY/02_CONTENT/levi-skills` → symlink to source |
+| **Claude load path** | `~/.claude/skills/<name>` → symlinks into `product/` / `personal/` |
+
+Same tree three ways: edit/git from Collevity or `~/dev`; Claude loads via `~/.claude/skills`.
 
 ## Layout
 
@@ -12,23 +18,27 @@ Personal + product Claude skills for Collevity.
 | `personal/` | Levi-only (e.g. build-learning-project) |
 | `_shared/` | Cross-skill conventions |
 
-## Load path wiring
+## Wiring
 
 ```text
-~/.claude/skills/orchestrate              -> …/product/orchestrate
-~/.claude/skills/session-save             -> …/product/session-save
-~/.claude/skills/checkin                  -> …/product/checkin
-~/.claude/skills/build-learning-project   -> …/personal/build-learning-project
-~/.claude/skills/_shared                  -> …/_shared
-~/.claude/skills/spec/                    third-party clone (not this repo)
-```
+00_COLLEVITY/02_CONTENT/levi-skills          -> ~/dev/levi-skills
 
-Edit here; Claude keeps loading from `~/.claude/skills/<name>/`.
+~/.claude/skills/orchestrate                 -> …/product/orchestrate
+~/.claude/skills/session-save                -> …/product/session-save
+~/.claude/skills/checkin                     -> …/product/checkin
+~/.claude/skills/build-learning-project      -> …/personal/build-learning-project
+~/.claude/skills/_shared                     -> …/_shared
+~/.claude/skills/spec/                       third-party clone (not this repo)
+```
 
 ## Everyday
 
 ```sh
+# either door — same repo
 cd ~/dev/levi-skills
+# or:
+cd "$HOME/Library/Mobile Documents/com~apple~CloudDocs/00_COLLEVITY/02_CONTENT/levi-skills"
+
 git status
 git add product/orchestrate/
 git commit -m "orchestrate: short description"

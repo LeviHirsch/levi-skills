@@ -24,15 +24,21 @@ Suite surfaces (threads vs tasks vs calendar): `~/.claude/skills/_shared/surface
 2. Skim **FEEDBACK.md → Open** in this skill folder; honor `prefer` / `dislike` without re-asking.
 3. Run a **full pass** unless the user named another mode.
 
-| Need | Path |
+**Resolve paths once per invoke:** if `references/paths.org.md` or `references/paths.local.md` exists, use those. Else defaults below (personal Collevity).
+
+| Need | Default (personal) |
 | --- | --- |
 | Registry | `/Users/levi/Library/Mobile Documents/com~apple~CloudDocs/00_COLLEVITY/03_TACTIC/thread-registry.md` |
 | SPP lake | `/Users/levi/Library/Mobile Documents/com~apple~CloudDocs/00_COLLEVITY/03_TACTIC/claude_session-persistent-packages/` |
 | This skill (load) | `~/.claude/skills/orchestrate/` (symlink) |
-| This skill (source) | `00_COLLEVITY/02_CONTENT/levi-skills/product/orchestrate/` |
-| Protocol | `…/00_COLLEVITY/01_STRATEGY/protocols/orchestrator-session.md` |
+| This skill (source) | git tree / `levi-skills/product/orchestrate/` |
+| Protocol | `…/00_COLLEVITY/01_STRATEGY/protocols/orchestrator-session.md` (optional if missing) |
+
+**Org (nascentech mini):** typically same lake/registry as `/session-save` — `~/nascentech-env/session-persistent-packages/` and `~/nascentech-env/thread-registry.md` via `references/paths.org.md`.
 
 **Ids:** one registry row = one durable **thread** (kebab slug). The SPP folder name is a *session* label — not the thread id. `latest-spp` is only that folder’s name under the lake.
+
+**Handoffs:** emit **absolute** SPP paths in "Open from" (not `…/` elision) so paste-and-go works.
 
 ---
 

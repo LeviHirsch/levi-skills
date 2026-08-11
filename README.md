@@ -28,7 +28,8 @@ Same **iCloud-safe external-gitdir** pattern as `collevity-tooling`.
 ~/.claude/skills/checkin                  -> …/levi-skills/product/checkin
 ~/.claude/skills/schedule                 -> …/levi-skills/product/schedule
 ~/.claude/skills/task                     -> …/levi-skills/product/task
-~/.claude/skills/log                      -> …/levi-skills/product/log
+~/.claude/skills/transcribe               -> …/levi-skills/product/transcribe
+~/.claude/skills/research-report          -> …/levi-skills/product/research-report
 ~/.claude/skills/build-learning-project   -> …/levi-skills/personal/build-learning-project
 ~/.claude/skills/_shared                  -> …/levi-skills/_shared
 ~/.claude/skills/spec/                    third-party clone (not this repo)
@@ -36,7 +37,7 @@ Same **iCloud-safe external-gitdir** pattern as `collevity-tooling`.
 
 ## The Google-stratum trio
 
-`schedule`, `task`, and `log` sit over Google Workspace as Collevity's **first data
+`schedule`, `task`, and `transcribe` sit over Google Workspace as Collevity's **first data
 stratum** — more limited than what Collevity will eventually hold, but already structured,
 already queryable, already on the phone.
 
@@ -44,9 +45,10 @@ already queryable, already on the phone.
 |------|---------|-----------|
 | `schedule` | Calendar | forward — intent |
 | `task` | Tasks | forward — no time claimed yet |
-| `log` | Calendar (`ACTUAL`) | backward — what happened |
+| `transcribe` | Calendar (`ACTUAL`) | backward — what happened |
 
-Separate skills because Levi names the surface (`schedule` / `task` / `log`) — no router.
+Separate skills because Levi names the surface (`schedule` / `task` / `transcribe`) — no router.
+(`/transcribe` was formerly `/log`; renamed to avoid host slash-command collisions.)
 Domains = tags + color, not separate calendars. Shared substrate:
 
 | File | Holds |
@@ -66,9 +68,9 @@ Canonical map: **`_shared/surfaces.md`** (where things go, routing reflexes, off
 Every edge is an **offer at a boundary**, never an automatic invocation.
 
 ```
-checkin ──close──▶ offer /log <date>        (only when the day is core-complete)
+checkin ──close──▶ offer /transcribe <date> (only when the day is core-complete)
         └─close──▶ offer /task              (commitments the interview surfaced)
-   log ──gather0─▶ offer /checkin first     (missing/thin log; he may override)
+transcribe ─gather0▶ offer /checkin first   (missing/thin log; he may override)
 orchestrate ─6b──▶ offer /task              (parking-lot "task-level not rows")
   task ──promote▶ /schedule                 (on his say-so; then close the task)
 ```
@@ -76,7 +78,7 @@ orchestrate ─6b──▶ offer /task              (parking-lot "task-level not
 **Deliberately absent: `orchestrate → /schedule`.** A thread may carry a dated gate — the pass
 names it and stops. Turning open work into calendar blocks is Levi's call.
 
-Chain: `checkin` → daily log → `/log` → ACTUAL (history for later plan comparison).
+Chain: `checkin` → daily log → `/transcribe` → ACTUAL (history for later plan comparison).
 
 ## Everyday
 

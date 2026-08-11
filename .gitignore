@@ -17,3 +17,5 @@
 
 # server-local org Drive IDs (never commit personal/org mix)
 product/research-report/references/drive-ids.org.md
+product/session-save/references/paths.org.md
+product/session-save/references/paths.local.md

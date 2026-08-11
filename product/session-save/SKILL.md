@@ -33,13 +33,22 @@ Promotion is **not** a diary. If you narrate the whole session there, you are wr
 
 ## Paths
 
-| | |
+**Resolve once per invoke:** if `references/paths.org.md` or `references/paths.local.md` exists, use those paths (org/server). Else defaults below (personal Collevity).
+
+| | Default (personal) |
 | --- | --- |
 | SPP lake | `/Users/levi/Library/Mobile Documents/com~apple~CloudDocs/00_COLLEVITY/03_TACTIC/claude_session-persistent-packages/` |
 | Registry | `/Users/levi/Library/Mobile Documents/com~apple~CloudDocs/00_COLLEVITY/03_TACTIC/thread-registry.md` |
-| Protocol | `…/01_STRATEGY/protocols/session-save-protocol.md` |
+| Protocol | `…/01_STRATEGY/protocols/session-save-protocol.md` (optional if missing) |
 | Skill dir (load) | `~/.claude/skills/session-save/` (symlink) |
-| Skill dir (source) | `00_COLLEVITY/02_CONTENT/levi-skills/product/session-save/` |
+| Skill dir (source) | git tree / `levi-skills/product/session-save/` |
+
+**Org (nascentech mini) typical override** — see `references/paths.org.md` on server:
+
+| | |
+| --- | --- |
+| SPP lake | `~/nascentech-env/session-persistent-packages/` |
+| Registry | `~/nascentech-env/thread-registry.md` |
 
 Package folder: `YYYY-MM-DD-HHMM_<session-slug>__<cwd-slug>/`
 

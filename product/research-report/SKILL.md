@@ -17,8 +17,8 @@ Working surface: **Google Doc**. Settled archive: **PDF only** (no docx history)
 /research-report feedback …
 ```
 
-Hub OAuth (personal dev): `levihirsch0@gmail.com` via workspace-mcp.  
-Org install later: shared Drive IDs in `references/drive-ids.md` (override when server is ready).
+**IDs:** prefer `references/drive-ids.org.md` if present (server/org). Else `references/drive-ids.md` (personal dev).  
+**Hub:** org = `mini@nascentech.com` on nascentech mini; personal dev = laptop only.
 
 Skim `FEEDBACK.md` Open items on invoke.
 
@@ -28,10 +28,10 @@ Skim `FEEDBACK.md` Open items on invoke.
 
 | | |
 | --- | --- |
-| IDs / paths | `references/drive-ids.md` |
+| IDs / paths | `drive-ids.org.md` (org) **or** `drive-ids.md` (personal) |
 | Submit fields | `references/submit-schema.md` |
 | Structure + modules | `references/structure.md` |
-| Full process (iCloud) | NASCENTECH `…/research-reports/PROCESS.md` |
+| Full process | shared-drive / iCloud `…/research-reports/PROCESS.md` |
 | Feedback | `FEEDBACK.md` |
 
 ---

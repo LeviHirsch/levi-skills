@@ -14,3 +14,6 @@
 
 # Superseded material — lineage in git history only
 /_archived/
+
+# server-local org Drive IDs (never commit personal/org mix)
+product/research-report/references/drive-ids.org.md
